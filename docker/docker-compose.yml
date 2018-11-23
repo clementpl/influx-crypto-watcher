@@ -1,0 +1,23 @@
+# TODO kubernetes/swarm => docker stack deploy --compose-file docker-compose.yml
+# Deploy influxdb + mongodb
+# https://docs.docker.com/engine/reference/commandline/stack_deploy/#examples
+version: '3.3'
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: always
+    #environment:
+    #  MONGO_INITDB_ROOT_USERNAME: root
+    #  MONGO_INITDB_ROOT_PASSWORD: example
+  influx:
+    image: influxdb:alpine
+    ports:
+      - "8086:8086"
+    restart: always
+    #configs:
+    #  - source: influx_config
+configs:
+  influx_config:
+    file: ./influx/influxdb.conf

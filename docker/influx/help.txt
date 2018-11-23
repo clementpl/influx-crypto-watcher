@@ -1,0 +1,9 @@
+create database <database name>
+use <database name>
+
+INSERT <measurement>,<tags1,tags2,...> <val1,value2,...> timestamp?
+example:
+    INSERT lala,crypto=btc close=5.5 1542454993671757728
+
+show measurements (measurements)
+show series (series by tag)

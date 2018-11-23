@@ -1,0 +1,5 @@
+2018-11-21T23:13:07+01:00 [[31merror[39m]: binance GET https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1542838327252&limit=1 system request to https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1542838327252&limit=1 failed, reason: getaddrinfo ENOTFOUND api.binance.com api.binance.com:443
+Error: binance GET https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1542838327252&limit=1 system request to https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1542838327252&limit=1 failed, reason: getaddrinfo ENOTFOUND api.binance.com api.binance.com:443
+    at fetchImplementation.catch.e (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/ccxt/js/base/Exchange.js:432:35)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+

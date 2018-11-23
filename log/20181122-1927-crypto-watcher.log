@@ -1,0 +1,8 @@
+2018-11-22T19:27:17+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-22T19:27:17+01:00 [[32minfo[39m]: [INFLUXDB] Connection successful: localhost:8086
+2018-11-22T19:27:17+01:00 [[32minfo[39m]: [WATCHER] Watcher started on binance: BTC/USDT
+2018-11-22T19:27:21+01:00 [[32minfo[39m]: [Watcher] 1812 missing points filled into InfluxDB for serie BTC/USDT
+2018-11-22T19:27:48+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-22T19:27:48+01:00 [[32minfo[39m]: [INFLUXDB] Connection successful: localhost:8086
+2018-11-22T19:27:48+01:00 [[32minfo[39m]: [WATCHER] Watcher started on binance: BTC/USDT
+2018-11-22T19:27:53+01:00 [[32minfo[39m]: [Watcher] 1811 missing points filled into InfluxDB for serie BTC/USDT

@@ -1,0 +1,12 @@
+2018-11-23T14:56:28+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-23T14:56:28+01:00 [[32minfo[39m]: [INFLUXDB] Connection successful: localhost:8086
+2018-11-23T14:56:28+01:00 [[32minfo[39m]: [API] Server running at: http://localhost:3000
+2018-11-23T14:56:30+01:00 [[31merror[39m]: ccxt[this.config.name] is not a constructor
+TypeError: ccxt[this.config.name] is not a constructor
+    at new Exchange (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Exchange/Exchange.ts:33:35)
+    at new MarketWatcher (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:39:21)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/api/modules/Watchers/Watchers.ts:26:37
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/clement/DEV/Crypto/influx-crypto-watcher/src/api/modules/Watchers/Watchers.ts:4:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+

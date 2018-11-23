@@ -1,0 +1,93 @@
+2018-11-21T13:17:45+01:00 [[31merror[39m]: [MONGODB] Database connection error: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:25:56+01:00 [[31merror[39m]: [MONGODB] Database connection error: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:26:11+01:00 [[31merror[39m]: [MONGODB] Database connection error: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:27:57+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:28:32+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:29:12+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:30:22+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:31:04+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:31:54+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:33:12+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:33:29+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:33:43+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:34:05+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:34:23+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:34:39+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:34:39+01:00 [[31merror[39m]: connect ECONNREFUSED 127.0.0.1:8086
+Error: connect ECONNREFUSED 127.0.0.1:8086
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1162:14)
+
+2018-11-21T13:36:01+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:36:01+01:00 [[31merror[39m]: [INFLUXDB] Connection error: localhost:8086
+2018-11-21T13:36:36+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:36:36+01:00 [[31merror[39m]: [INFLUXDB] Connection error: localhost:8086
+Error: [INFLUXDB] Connection error: localhost:8086
+    at Influx.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:28:9)
+    at Generator.throw (<anonymous>)
+    at rejected (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:5:65)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-21T13:37:00+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:37:00+01:00 [[31merror[39m]: [INFLUXDB] Connection error: localhost:8086
+Error: [INFLUXDB] Connection error: localhost:8086
+    at Influx.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:28:9)
+    at Generator.throw (<anonymous>)
+    at rejected (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:5:65)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-21T13:37:12+01:00 [[31merror[39m]: [MONGODB] Connection error: mongodb://localhost:27017/crypto-watcher
+Error: [MONGODB] Connection error: mongodb://localhost:27017/crypto-watcher
+    at Function.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Mongo/Mongo.ts:20:20)
+    at Generator.throw (<anonymous>)
+    at rejected (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Mongo/Mongo.ts:5:65)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-21T13:38:24+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:39:07+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:39:07+01:00 [[31merror[39m]: [WATCHER] Cannot create Market Watcher with given config
+Error: [WATCHER] Cannot create Market Watcher with given config
+    at MarketWatcher.checkConfig (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:44:13)
+    at new MarketWatcher (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:29:10)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/index.ts:39:21
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/clement/DEV/Crypto/influx-crypto-watcher/src/index.ts:4:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-21T13:39:31+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:39:31+01:00 [[31merror[39m]: [WATCHER] Cannot create Market Watcher with given config
+Error: [WATCHER] Cannot create Market Watcher with given config
+    at MarketWatcher.checkConfig (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:44:13)
+    at new MarketWatcher (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:29:10)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/index.ts:39:21
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/clement/DEV/Crypto/influx-crypto-watcher/src/index.ts:4:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-21T13:40:42+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:40:42+01:00 [[31merror[39m]: [WATCHER] Cannot create Market Watcher with refreshInterval < 1000
+Error: [WATCHER] Cannot create Market Watcher with refreshInterval < 1000
+    at MarketWatcher.checkConfig (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:44:13)
+    at new MarketWatcher (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:29:10)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/index.ts:39:21
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/clement/DEV/Crypto/influx-crypto-watcher/src/index.ts:4:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-21T13:41:33+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:41:33+01:00 [[31merror[39m]: [WATCHER] Cannot create market watcher with refreshInterval < 1000 (1 seconde)
+Error: [WATCHER] Cannot create market watcher with refreshInterval < 1000 (1 seconde)
+    at MarketWatcher.checkConfig (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:44:13)
+    at new MarketWatcher (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:29:10)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/index.ts:39:21
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/clement/DEV/Crypto/influx-crypto-watcher/src/index.ts:4:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-21T13:41:50+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:41:50+01:00 [[32minfo[39m]: [WATCHER] Watcher started on binance: BTC/USDT
+2018-11-21T13:42:37+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:42:37+01:00 [[32minfo[39m]: [INFLUXDB] Connection successful: localhost:8086
+2018-11-21T13:42:37+01:00 [[32minfo[39m]: [WATCHER] Watcher started on binance: BTC/USDT
+2018-11-21T13:49:55+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-21T13:49:55+01:00 [[32minfo[39m]: [INFLUXDB] Connection successful: localhost:8086
+2018-11-21T13:49:55+01:00 [[32minfo[39m]: [WATCHER] Watcher started on binance: BTC/USDT

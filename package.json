@@ -1,0 +1,35 @@
+{
+  "name": "influx-crypto-watcher",
+  "version": "1.0.0",
+  "description": "Cryptocurrencie market data watcher and storing into influxdb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker": "docker-compose -f ./docker/docker-compose.yml up",
+    "pretest": "node_modules/tslint/bin/tslint --project .",
+    "start": "ts-node -P ./tsconfig.json src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^7.2.2",
+    "ccxt": "^1.17.513",
+    "hapi": "^17.8.1",
+    "influx": "^5.0.7",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.12",
+    "uuid": "^3.3.2",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/hapi": "^17.6.4",
+    "@types/moment": "^2.13.0",
+    "@types/mongoose": "^5.3.1",
+    "@types/uuid": "^3.4.4",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.16.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.1.6"
+  }
+}

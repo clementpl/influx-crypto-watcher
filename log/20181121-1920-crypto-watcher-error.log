@@ -1,0 +1,45 @@
+2018-11-21T19:20:09+01:00 [[31merror[39m]: Attempted to run an influx query without a default database specified or an explicit database provided.
+Error: Attempted to run an influx query without a default database specified or an explicit database provided.
+    at InfluxDB.defaultDB (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/influx/lib/src/index.js:848:19)
+    at InfluxDB.queryRaw (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/influx/lib/src/index.js:812:68)
+    at InfluxDB.query (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/influx/lib/src/index.js:795:21)
+    at Influx.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:132:31)
+    at Generator.next (<anonymous>)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:3:12)
+    at Influx.count (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:119:16)
+    at MarketWatcher.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:99:34)
+    at Generator.next (<anonymous>)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:3:12)
+    at MarketWatcher.fillGap (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:92:16)
+    at MarketWatcher.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:63:10)
+
+2018-11-21T19:20:09+01:00 [[31merror[39m]: Problem with query SELECT count(*) FROM OHLC WHERE symbol='BTC/USDT'
+Error: Problem with query SELECT count(*) FROM OHLC WHERE symbol='BTC/USDT'
+    at Influx.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:137:13)
+    at Generator.next (<anonymous>)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:3:12)
+    at Influx.count (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Influx/Influx.ts:119:16)
+    at MarketWatcher.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:99:34)
+    at Generator.next (<anonymous>)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:3:12)
+    at MarketWatcher.fillGap (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:92:16)
+    at MarketWatcher.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:63:10)
+    at Generator.next (<anonymous>)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:7:71
+    at new Promise (<anonymous>)
+
+2018-11-21T19:20:09+01:00 [[31merror[39m]: Error when filling history
+Error: Error when filling history
+    at MarketWatcher.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:138:13)
+    at Generator.throw (<anonymous>)
+    at rejected (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:5:65)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+

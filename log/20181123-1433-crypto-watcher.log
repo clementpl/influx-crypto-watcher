@@ -1,0 +1,24 @@
+2018-11-23T14:33:32+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
+2018-11-23T14:33:32+01:00 [[32minfo[39m]: [INFLUXDB] Connection successful: localhost:8086
+2018-11-23T14:33:32+01:00 [[32minfo[39m]: [API] Server running at: http://localhost:3000
+2018-11-23T14:35:15+01:00 [[31merror[39m]: Class constructor MarketWatcher cannot be invoked without 'new'
+TypeError: Class constructor MarketWatcher cannot be invoked without 'new'
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/api/modules/Watchers/Watchers.ts:51:49
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/clement/DEV/Crypto/influx-crypto-watcher/src/api/modules/Watchers/Watchers.ts:4:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-23T14:36:11+01:00 [[31merror[39m]: Cannot read property 'getWatchers' of null
+TypeError: Cannot read property 'getWatchers' of null
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/api/modules/Watchers/Watchers.ts:19:35
+    at Generator.next (<anonymous>)
+    at /home/clement/DEV/Crypto/influx-crypto-watcher/src/api/modules/Watchers/Watchers.ts:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/clement/DEV/Crypto/influx-crypto-watcher/src/api/modules/Watchers/Watchers.ts:3:12)
+    at restartWatchers (/home/clement/DEV/Crypto/influx-crypto-watcher/src/api/modules/Watchers/Watchers.ts:23:16)
+    at module.exports.internals.Manager.execute (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/hapi/lib/toolkit.js:35:106)
+    at Object.internals.handler (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/hapi/lib/handler.js:50:48)
+    at exports.execute (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/hapi/lib/handler.js:35:36)
+    at Request._lifecycle (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/hapi/lib/request.js:263:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+

@@ -1,0 +1,31 @@
+2018-11-22T17:05:15+01:00 [[31merror[39m]: binance GET https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1542902655591&limit=1 system request to https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1542902655591&limit=1 failed, reason: getaddrinfo ENOTFOUND api.binance.com api.binance.com:443
+Error: binance GET https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1542902655591&limit=1 system request to https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1542902655591&limit=1 failed, reason: getaddrinfo ENOTFOUND api.binance.com api.binance.com:443
+    at fetchImplementation.catch.e (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/ccxt/js/base/Exchange.js:432:35)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-22T17:05:15+01:00 [[31merror[39m]: [Exchange] binance doesn't have fetchOHLCV method
+Error: [Exchange] binance doesn't have fetchOHLCV method
+    at Exchange.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Exchange/Exchange.ts:80:13)
+    at Generator.throw (<anonymous>)
+    at rejected (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Exchange/Exchange.ts:5:65)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-22T17:05:18+01:00 [[31merror[39m]: binance GET https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1529728640550&limit=501 system request to https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1529728640550&limit=501 failed, reason: read ECONNRESET
+Error: binance GET https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1529728640550&limit=501 system request to https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1529728640550&limit=501 failed, reason: read ECONNRESET
+    at fetchImplementation.catch.e (/home/clement/DEV/Crypto/influx-crypto-watcher/node_modules/ccxt/js/base/Exchange.js:432:35)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-22T17:05:18+01:00 [[31merror[39m]: [Exchange] binance doesn't have fetchOHLCV method
+Error: [Exchange] binance doesn't have fetchOHLCV method
+    at Exchange.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Exchange/Exchange.ts:80:13)
+    at Generator.throw (<anonymous>)
+    at rejected (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Exchange/Exchange.ts:5:65)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
+2018-11-22T17:05:18+01:00 [[31merror[39m]: [Watcher] Error when filling history BTC/USDT
+Error: [Watcher] Error when filling history BTC/USDT
+    at MarketWatcher.<anonymous> (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:129:13)
+    at Generator.throw (<anonymous>)
+    at rejected (/home/clement/DEV/Crypto/influx-crypto-watcher/src/_core/Watcher/MarketWatcher/MarketWatcher.ts:5:65)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+
