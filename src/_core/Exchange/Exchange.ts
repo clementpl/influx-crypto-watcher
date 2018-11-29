@@ -50,6 +50,14 @@ export class Exchange {
     return markets[0];
   }
 
+  /**
+   * Fetch candle history
+   *
+   * @param {string} symbol Crypto symbol to fetch (BTC/USDT, ETH/BTC, ...)
+   * @param {{ limit: number; since?: number }} opts limit: number of candle to fetch since the given timestamp (default now() - limit minutes)
+   * @returns {Promise<OHLCV[]>}
+   * @memberof Exchange
+   */
   public async getCandles(symbol: string, opts: { limit: number; since?: number }): Promise<OHLCV[]> {
     if (!this.exchange.fetchOHLCV) {
       throw new Error(`[Exchange] ${this.config.name} doesn't have fetchOHLCV method`);
@@ -80,42 +88,6 @@ export class Exchange {
       throw new Error(`[Exchange] ${this.config.name} doesn't have fetchOHLCV method`);
     }
   }
-
-  /*
-  public async getCandlesHistory(
-    market: string,
-    since: number,
-    limit: number = 1
-  ): Promise<OHLCV[]> {
-    if (!this.exchange.fetchOHLCV) {
-      const error = new Error(
-        `Exchange ${this.config.name} doesn't have fetchOHLCV method`
-      );
-      logger.error(error.message, { stack: error.stack });
-      throw error;
-    }
-    try {
-      let candles = await this.cache.get(market, since, limit);
-      if (!candles) {
-        console.log('NO CANDLE FOUNDED');
-        candles = await this.exchange.fetchOHLCV(market, '1m', since, limit);
-        this.cache.set(market, candles);
-      }
-      return candles.map(
-        ([T, O, H, L, C, V]) =>
-          <OHLCV>{
-            time: T,
-            open: O,
-            high: H,
-            low: L,
-            close: C,
-            volume: V,
-          }
-      );
-    } catch (error) {
-      throw error;
-    }
-  }*/
 }
 
 /*

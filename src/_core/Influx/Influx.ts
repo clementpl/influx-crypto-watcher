@@ -57,7 +57,7 @@ export class Influx {
    * @param {OHLCV[]} data
    * @memberof Influx
    */
-  public async writeOHLC(tags: { symbol: string }, data: OHLCV[]) {
+  public async writeOHLC(tags: { base: string, quote: string, exchange: string }, data: OHLCV[]) {
     const points = data.map(({ time, open, high, low, close, volume }) => {
       return {
         measurement: MEASUREMENT_OHLC,
@@ -79,7 +79,7 @@ export class Influx {
    * @param {string} [aggregatedTime='1m'] // influxdb units: s(seconds), m (minutes), d (days)
    * @memberof Influx
    */
-  public async getOHLC(tags: { symbol: string }, aggregatedTime: string = '1m') {
+  public async getOHLC(tags: { base: string, quote: string, exchange: string }, aggregatedTime: string = '1m') {
     this.influx.query(
       `SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close
        FROM ${MEASUREMENT_OHLC}

@@ -39,6 +39,22 @@ export async function restartWatchers(influx: Influx): Promise<any> {
 }
 
 /**
+ * Stop every running watchers
+ *
+ * @export
+ * @returns {Promise<any>}
+ */
+export async function stopWatchers(): Promise<any> {
+  try {
+    Watchers.runningWatchers.forEach(watcher => watcher.stop());
+    Watchers.runningWatchers = [];
+  } catch (error) {
+    logger.error(error);
+    throw new Error('Error while stopping watchers');
+  }
+}
+
+/**
  * Check if the given watcher configuration already exist in mongodb
  *
  * @export
@@ -46,19 +62,18 @@ export async function restartWatchers(influx: Influx): Promise<any> {
  * @returns
  */
 export async function watcherConfigurationExist(config: any) {
-    const watchers: any[] = await Watchers.getWatchers();
-    const keys: string[] = Object.keys(config);
-    // Remove extra config to retain only identifier property (used to compare if config already exists)
-    if (keys.indexOf("extra") !== -1) {
-        keys.splice(keys.indexOf("extra"), 1);
-    }
-    // For each watcher already existing, check if same config exist {exhange, base, quote}
-    for (let i=0; i< watchers.length; i++) {
-        const watcher = watchers[i];
-        let sameKeys = 0;
-        keys.forEach(key => watcher[key] === config[key] ? sameKeys++ : sameKeys)
-        if (sameKeys === keys.length)
-            return true;
-    }
-    return false;
+  const watchers: any[] = await Watchers.getWatchers();
+  const keys: string[] = Object.keys(config);
+  // Remove extra config to retain only identifier property (used to compare if config already exists)
+  if (keys.indexOf('extra') !== -1) {
+    keys.splice(keys.indexOf('extra'), 1);
+  }
+  // For each watcher already existing, check if same config exist {exhange, base, quote}
+  for (let i = 0; i < watchers.length; i++) {
+    const watcher = watchers[i];
+    let sameKeys = 0;
+    keys.forEach(key => (watcher[key] === config[key] ? sameKeys++ : sameKeys));
+    if (sameKeys === keys.length) return true;
+  }
+  return false;
 }

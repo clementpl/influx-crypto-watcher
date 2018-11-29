@@ -1,3 +1,0 @@
-2018-11-21T16:51:04+01:00 [[32minfo[39m]: [MONGODB] Connection successful: mongodb://localhost:27017/crypto-watcher
-2018-11-21T16:51:04+01:00 [[32minfo[39m]: [INFLUXDB] Connection successful: localhost:8086
-2018-11-21T16:51:04+01:00 [[32minfo[39m]: [WATCHER] Watcher started on binance: BTC/USDT

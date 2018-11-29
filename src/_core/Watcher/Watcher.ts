@@ -1,6 +1,7 @@
 import * as uuid from 'uuid';
 import { WatcherModel } from './model';
 import { Influx } from '../Influx/Influx';
+import { logger } from '../../logger';
 
 export enum WatcherStatus {
   RUNNING = 'RUNNING',
@@ -15,9 +16,9 @@ export enum WatcherStatus {
  * @extends {Document} MongoDB model saving
  */
 export interface IWatcherConfig {
-  id?: string;
-  type: string;
-  extra?: any
+  id?: string; // id of the watcher
+  type: string; // Kind of watcher (MarketWatcher/SignalWatcher)
+  extra?: any; // Extra configuration (not primary key all the other property of a watcher are use as primary key)
 }
 
 /**
@@ -31,7 +32,7 @@ export abstract class Watcher {
   public id: string;
   private status: WatcherStatus;
   private influx: Influx;
-  private model: Document;
+  private restart: number = 0;
 
   /**
    * Creates an instance of Watcher and save it to mongodb (if persist).
@@ -64,8 +65,20 @@ export abstract class Watcher {
 
   public async run(): Promise<void> {
     this.status = WatcherStatus.RUNNING;
-    this.runWatcher();
-    await this.save();
+    await this.save().catch(error => logger.error(error));
+    this.runWatcher().catch(async error => {
+      logger.error(error);
+      if (this.restart < 3) {
+        this.restart += 1;
+        logger.info(`[Watcher] Try restarting (${this.restart}/3) watcher ${this.id}`);
+        await this.stop();
+        this.run();
+      } else {
+        await this.stop();
+        logger.error(`[Watcher] Stopping watcher ${this.id} (can't restart it)`);
+        //throw new Error(`Can't restart the watcher ${this.id}`);
+      }
+    });
   }
 
   public async stop(): Promise<void> {
@@ -103,9 +116,9 @@ export abstract class Watcher {
    * @param {*} config
    * @memberof Watcher
    */
-  public async save() {
+  public async save(): Promise<void> {
     const { type, ...extra } = this.conf;
-    const watcher = { ...extra, id: this.id,  type, status: this.status };
+    const watcher = { ...extra, id: this.id, type, status: this.status };
     await WatcherModel.findOneAndUpdate({ id: this.id }, watcher, { upsert: true });
   }
 }
