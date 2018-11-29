@@ -43,6 +43,7 @@ Every watcher are persist to MongoDB to restart them when restarting the app.
 
 ## API
 
+- Doc available at http://localhost:3000/docs generated with [lout](https://github.com/hapijs/lout)
 - Easy watcher deployment
 - Watch specific currencies
 - TODO Watch signals (telegram, ...?)
