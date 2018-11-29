@@ -15,6 +15,14 @@ import { restartWatchers, watcherConfigurationExist, stopWatchers } from './help
 export class Watchers {
   public static runningWatchers: Watcher[] = [];
 
+  /**
+   * Restart every watcher
+   *
+   * @static
+   * @param {Request} request
+   * @returns {Promise<any>}
+   * @memberof Watchers
+   */
   public static async restartAllWatchers(request: Request): Promise<any> {
     try {
       await restartWatchers((<any>request.server.app).influx);

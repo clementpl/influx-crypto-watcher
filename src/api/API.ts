@@ -43,6 +43,9 @@ export class API {
         routes: { cors: true },
       });
 
+      // Register plugins for lout (api documentation)
+      await server.register([require('vision'), require('inert'), require('lout')]);
+
       // Expose influx instance
       server.app = { influx: config.influx };
 
