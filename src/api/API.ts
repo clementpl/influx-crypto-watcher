@@ -10,6 +10,11 @@ export interface APIConfig {
   influx: Influx;
 }
 
+const DEFAULT_API_CONFIG = {
+  port: 3000,
+  host: 'localhost',
+};
+
 /**
  * Static class API
  *
@@ -27,14 +32,8 @@ export class API {
    * @returns {Promise<void>}
    * @memberof API
    */
-  public static async create(conf?: APIConfig): Promise<void> {
-    const config = Object.assign(
-      {
-        port: 3000,
-        host: 'localhost',
-      },
-      conf
-    );
+  public static async create(conf?: APIConfig): Promise<Server> {
+    const config = Object.assign(DEFAULT_API_CONFIG, conf);
     try {
       // Create new Server
       const server = new Server({
@@ -59,6 +58,7 @@ export class API {
       API.server = server;
 
       logger.info(`[API] Server running at: ${API.server.info.uri}`);
+      return server;
     } catch (error) {
       logger.error(error);
       throw new Error('[API] Cannot start api');

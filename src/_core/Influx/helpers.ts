@@ -12,9 +12,6 @@ import { IPoint } from 'influx';
 export function tagsToString(tags: { [name: string]: string }) {
   let str = '';
   const keys = Object.keys(tags);
-  keys.forEach(
-    (key, idx) =>
-      (str += `${key}='${tags[key]}'${idx === keys.length - 1 ? '' : ' AND '}`)
-  );
+  keys.forEach((key, idx) => (str += `${key}='${tags[key]}'${idx === keys.length - 1 ? '' : ' AND '}`));
   return str;
 }

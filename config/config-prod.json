@@ -6,13 +6,13 @@
   "influx": {
     "host": "localhost",
     "port": 8086,
-    "stockDatabase": "crypto_series",
-    "eventDatabase": "crypto_signals"
+    "stockDatabase": "prod_crypto_series",
+    "eventDatabase": "prod_crypto_signals"
   },
   "mongo": {
     "host": "localhost",
     "port": 27017,
-    "database": "crypto-watcher"
+    "database": "prod-crypto-watcher"
   },
   "api": {
     "host": "localhost",

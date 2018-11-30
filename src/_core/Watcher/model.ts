@@ -1,5 +1,4 @@
 import { Schema, model, Document } from 'mongoose';
-//import { IWatcherConfig } from './Watcher';
 
 // Create watcher schema
 const WatcherSchema = new Schema(
@@ -13,8 +12,6 @@ const WatcherSchema = new Schema(
   },
   { strict: false }
 );
-
-//interface IWatcherConfigDoc extends IWatcherConfig, Document {}
 
 export interface IWatcherModel extends Document {
   id?: string;

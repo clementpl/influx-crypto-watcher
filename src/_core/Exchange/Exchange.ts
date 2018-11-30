@@ -1,5 +1,4 @@
 import * as ccxt from 'ccxt';
-import { Exchange as ccxtExchange, Market } from 'ccxt';
 import * as moment from 'moment';
 import { logger } from '../../logger';
 
@@ -23,14 +22,14 @@ export interface OHLCV {
  * @class Exchange
  */
 export class Exchange {
-  private exchange: ccxtExchange;
-  private marketsInfo: Array<Market>;
+  private exchange: ccxt.Exchange;
+  private marketsInfo: ccxt.Market[];
 
   constructor(public config: ExchangeConfig) {
     // Create exchange with ccxt
-    this.exchange = <ccxtExchange>new (<any>ccxt)[this.config.name]({
-      apiKey: '', //this.config.api_key,
-      secret: '', //this.config.api_secret,
+    this.exchange = <ccxt.Exchange>new (<any>ccxt)[this.config.name]({
+      apiKey: '',
+      secret: '',
       timeout: 30000,
       enableRateLimit: true,
     });
@@ -43,7 +42,7 @@ export class Exchange {
    * @returns {Promise<Market>}
    * @memberof Exchange
    */
-  public async getExchangeInfo(symbol: string): Promise<Market> {
+  public async getExchangeInfo(symbol: string): Promise<ccxt.Market> {
     if (!this.marketsInfo) this.marketsInfo = await this.exchange.fetchMarkets();
     const markets = this.marketsInfo.filter(market => market.id === symbol);
     if (markets.length !== 1) throw new Error(`Market ${symbol} not found`);
@@ -54,7 +53,8 @@ export class Exchange {
    * Fetch candle history
    *
    * @param {string} symbol Crypto symbol to fetch (BTC/USDT, ETH/BTC, ...)
-   * @param {{ limit: number; since?: number }} opts limit: number of candle to fetch since the given timestamp (default now() - limit minutes)
+   * @param {{ limit: number; since?: number }} opts
+   *           limit: number of candle to fetch since the given timestamp (default now() - limit minutes)
    * @returns {Promise<OHLCV[]>}
    * @memberof Exchange
    */
@@ -64,7 +64,7 @@ export class Exchange {
     }
     try {
       // Get limit timestamp (5 minutes before now if limit = 5)
-      const limit: number = opts.limit | 1;
+      const limit: number = opts.limit || 1;
       const since: number =
         opts.since ||
         moment()

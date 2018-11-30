@@ -55,9 +55,8 @@ export class Watchers {
 
   public static async deleteWatchers(request: Request): Promise<any> {
     try {
-      for (let i = 0; i < Watchers.runningWatchers.length; i++) {
-        const running = Watchers.runningWatchers[i];
-        await running.stop();
+      for (const watcher of Watchers.runningWatchers) {
+        await watcher.stop();
       }
       await WatcherModel.collection.drop();
       Watchers.runningWatchers = [];
@@ -73,7 +72,7 @@ export class Watchers {
       const { id } = request.params;
       const watcher = await WatcherModel.findOne({ id });
       if (!watcher) {
-        throw Boom.notFound(`Watcher ${id} not found`);
+        return Boom.notFound(`Watcher ${id} not found`);
       }
       return watcher;
     } catch (error) {
@@ -97,10 +96,12 @@ export class Watchers {
     // Create the watcher (in function of the given type)
     const watcher: Watcher = new (<any>watcherClasses)[watcherConfig.type](watcherConfig);
     watcher.setInflux((<any>request.server.app).influx);
-    watcher.run();
+    watcher.run().catch(error => {
+      throw error;
+    });
     // Push the new running watchers
     Watchers.runningWatchers.push(watcher);
-    return watcher;
+    return { id: watcher.id };
   }
 
   public static async startWatcher(request: Request): Promise<any> {
@@ -114,7 +115,9 @@ export class Watchers {
       // Create and configure the watcher
       const instance = <Watcher>new (<any>watcherClasses)[watcher.type]((<any>watcher)._doc);
       instance.setInflux((<any>request.server.app).influx);
-      instance.run();
+      instance.run().catch(error => {
+        throw error;
+      });
       // Push the watcher instance in the array of running watchers
       Watchers.runningWatchers.push(instance);
       return { msg: `Watcher ${id} started` };
