@@ -2,15 +2,15 @@ language: node_js
 sudo: false
 node_js:
   - 10
-install:
-  - npm install
-script:
-  - npm test
+
 services:
   - docker
 
 before_install:
   - npm run docker
 
-script:
-  - bundle exec rake test
+install:
+  - npm install
+
+  script:
+  - npm test
