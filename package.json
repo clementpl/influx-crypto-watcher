@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=TEST nyc mocha -r ts-node/register test/index.ts",
     "prettier": "prettier --write 'src/**/*.ts'",
-    "docker": "docker-compose -f ./docker/docker-compose.yml up",
+    "docker": "docker-compose -f ./docker/docker-compose.yml up -d",
     "pretest": "node_modules/tslint/bin/tslint --project .",
     "start": "ts-node -P ./tsconfig.json src/index.ts"
   },
