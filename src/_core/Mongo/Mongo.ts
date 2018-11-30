@@ -21,4 +21,13 @@ export class Mongo {
       throw error;
     }
   }
+
+  public static async close() {
+    try {
+      await mongoose.connection.close();
+    } catch (error) {
+      logger.error(new Error(`[MONGODB] Close connection error: ${URL}`));
+      throw error;
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import * as mongoose from 'mongoose';
 import { config } from '../config/config';
 import { Influx } from './_core/Influx/Influx';
 import { Mongo } from './_core/Mongo/Mongo';
@@ -54,8 +55,8 @@ export async function startServer(shouldRestartWatchers: boolean = true): Promis
 export async function stopServer(): Promise<void> {
   try {
     logger.info('Shutting down server...');
+    await Mongo.close();
     await API.stop();
-    process.exit();
   } catch (error) {
     logger.error(error);
     throw new Error('Error while stopping..');

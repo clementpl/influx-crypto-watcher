@@ -7,11 +7,15 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'DEV';
 startServer().catch(error => {
   logger.error(error);
   logger.error(new Error('Unexpected Error'));
-  process.exit();
+  process.exit(1);
 });
 
 /* tslint:disable */
 // Catch SIGINT/SIGNTERM/KILL ,...
-require('death')(async () => {
-  await stopServer();
+require('death')(() => {
+  stopServer().catch(error => {
+    logger.error(error);
+    logger.error(new Error('Unexpected Error'));
+    process.exit(1);
+  });
 });

@@ -8,7 +8,7 @@
     "prettier": "prettier --write 'src/**/*.ts'",
     "docker": "docker-compose -f ./docker/docker-compose.yml up",
     "pretest": "node_modules/tslint/bin/tslint --project .",
-    "start": "ts-node -P ./tsconfig.json test.ts"
+    "start": "ts-node -P ./tsconfig.json src/index.ts"
   },
   "nyc": {
     "extension": [
