@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=TEST nyc mocha -r ts-node/register test/index.ts",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --write 'src/**/*.ts'",
     "docker": "docker-compose -f ./docker/docker-compose.yml up -d",
     "pretest": "node_modules/tslint/bin/tslint --project .",
@@ -46,6 +47,7 @@
     "@types/uuid": "^3.4.4",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
+    "coveralls": "^3.0.2",
     "lout": "^11.1.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
