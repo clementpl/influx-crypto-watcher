@@ -2,7 +2,6 @@
 import * as chai from 'chai';
 import { startServer, stopServer } from '../../src/server';
 import { getWatcherConfig } from './helpers';
-//import { Watcher } from '../src/_core/Watcher/Watcher';
 import { WatcherModel } from '../../src/_core/Watcher/model';
 
 chai.should();
@@ -64,7 +63,6 @@ describe('Watchers', () => {
     });
 
     it('it should stop every watchers', done => {
-      // Create 2 watcher, then
       chai
         .request(server.listener)
         .get('/watchers/stop')
@@ -85,7 +83,6 @@ describe('Watchers', () => {
     });
 
     it('it should restart every watchers', done => {
-      // Create 2 watcher, then
       chai
         .request(server.listener)
         .get('/watchers/restart')
@@ -106,7 +103,6 @@ describe('Watchers', () => {
     });
 
     it('it should delete every watchers', done => {
-      // Create 2 watcher, then
       chai
         .request(server.listener)
         .del('/watchers')
