@@ -68,15 +68,20 @@ export abstract class Watcher {
     await this.save().catch(error => logger.error(error));
     this.runWatcher().catch(async error => {
       logger.error(error);
-      if (this.restart < 3) {
-        this.restart += 1;
-        logger.info(`[Watcher] Try restarting (${this.restart}/3) watcher ${this.id}`);
-        await this.stop();
-        this.run();
-      } else {
-        await this.stop();
-        logger.error(`[Watcher] Stopping watcher ${this.id} (can't restart it)`);
-        //throw new Error(`Can't restart the watcher ${this.id}`);
+      try {
+        if (this.restart < 3) {
+          this.restart += 1;
+          logger.info(`[Watcher] Try restarting (${this.restart}/3) watcher ${this.id}`);
+          await this.stop();
+          this.run().catch(err => {
+            throw err;
+          });
+        } else {
+          await this.stop();
+          logger.error(`[Watcher] Stopping watcher ${this.id} (can't restart it)`);
+        }
+      } catch (e) {
+        throw e;
       }
     });
   }

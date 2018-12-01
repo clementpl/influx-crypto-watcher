@@ -1,4 +1,6 @@
 node_modules/
 package-lock.json
 .vscode/
+.nyc_output/
+.coveralls.yml
 log/

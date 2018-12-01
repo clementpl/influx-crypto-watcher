@@ -2,25 +2,26 @@ import * as Joi from 'joi';
 import { ServerRoute } from 'hapi';
 import { Watchers } from './Watchers';
 
-export const routes: Array<ServerRoute> = [
-  <ServerRoute>{
+export const routes: ServerRoute[] = [
+  {
     method: 'POST',
     path: '/watchers',
     handler: Watchers.createWatcher,
     options: {
       validate: {
-        query: Joi.object({
-          type: Joi.string().required(),
+        payload: {
+          type: Joi.string().valid('MarketWatcher').required(),
           base: Joi.string().required(),
           quote: Joi.string().required(),
           exchange: Joi.string().required(),
-        }),
+          extra: Joi.object(),
+        },
       },
       tags: ['Watcher', 'API'],
       description: 'POST Create a new watcher with the given configuration',
     },
   },
-  <ServerRoute>{
+  {
     method: 'GET',
     path: '/watchers',
     handler: Watchers.getWatchers,
@@ -29,7 +30,7 @@ export const routes: Array<ServerRoute> = [
       description: 'GET Fetch every watchers',
     },
   },
-  <ServerRoute>{
+  {
     method: 'GET',
     path: '/watchers/restart',
     handler: Watchers.restartAllWatchers,
@@ -38,7 +39,16 @@ export const routes: Array<ServerRoute> = [
       description: 'GET Restart every watchers',
     },
   },
-  <ServerRoute>{
+  {
+    method: 'GET',
+    path: '/watchers/stop',
+    handler: Watchers.stopAllWatchers,
+    options: {
+      tags: ['Watcher', 'API'],
+      description: 'GET Stop every watchers',
+    },
+  },
+  {
     method: 'DELETE',
     path: '/watchers',
     handler: Watchers.deleteWatchers,
@@ -47,7 +57,7 @@ export const routes: Array<ServerRoute> = [
       description: 'DELETE Delete every watchers',
     },
   },
-  <ServerRoute>{
+  {
     method: 'GET',
     path: '/watchers/{id}/start',
     handler: Watchers.startWatcher,
@@ -61,7 +71,7 @@ export const routes: Array<ServerRoute> = [
       description: 'GET Start a watcher',
     },
   },
-  <ServerRoute>{
+  {
     method: 'GET',
     path: '/watchers/{id}/stop',
     handler: Watchers.stopWatcher,
@@ -75,7 +85,7 @@ export const routes: Array<ServerRoute> = [
       description: 'GET Stop a watcher',
     },
   },
-  <ServerRoute>{
+  {
     method: 'GET',
     path: '/watchers/{id}',
     handler: Watchers.getWatcher,
@@ -89,7 +99,7 @@ export const routes: Array<ServerRoute> = [
       description: 'GET Get a specific watcher',
     },
   },
-  <ServerRoute>{
+  {
     method: 'DELETE',
     path: '/watchers/{id}',
     handler: Watchers.deleteWatcher,

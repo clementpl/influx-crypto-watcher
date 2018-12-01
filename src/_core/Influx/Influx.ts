@@ -1,7 +1,7 @@
 import * as moment from 'moment';
-import { InfluxDB, IPoint, IResults } from 'influx';
-import { OHLCV } from '../Exchange/Exchange';
+import { InfluxDB } from 'influx';
 import { logger } from '../../logger';
+import { OHLCV } from '../Exchange/Exchange';
 import { MEASUREMENT_OHLC } from './constants';
 import { tagsToString } from './helpers';
 
@@ -34,36 +34,21 @@ export class Influx {
   }
 
   /**
-   * Check if given database name exist. If not create it.
-   *
-   * @private
-   * @param {string} name
-   * @memberof Influx
-   */
-  private async createDatabaseIfNotExist(name: string) {
-    try {
-      const databases: string[] = await this.influx.getDatabaseNames();
-      // If not exist create it
-      if (!databases.includes(name)) this.influx.createDatabase(name);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  /**
    * Write OHLCV points to influxdb
    *
    * @param {{symbol: string}} tags Tag of the serie (currently just the symbol, maybe more later)
    * @param {OHLCV[]} data
    * @memberof Influx
    */
-  public async writeOHLC(tags: { base: string, quote: string, exchange: string }, data: OHLCV[]) {
+  public async writeOHLC(tags: { base: string; quote: string; exchange: string }, data: OHLCV[]) {
     const points = data.map(({ time, open, high, low, close, volume }) => {
       return {
         measurement: MEASUREMENT_OHLC,
         tags,
         fields: { open, high, low, close, volume },
-        timestamp: moment(time).toDate().getTime()
+        timestamp: moment(time)
+          .toDate()
+          .getTime(),
       };
     });
     await this.influx.writePoints(points, {
@@ -79,16 +64,22 @@ export class Influx {
    * @param {string} [aggregatedTime='1m'] // influxdb units: s(seconds), m (minutes), d (days)
    * @memberof Influx
    */
-  public async getOHLC(tags: { base: string, quote: string, exchange: string }, aggregatedTime: string = '1m') {
-    this.influx.query(
-      `SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close
-       FROM ${MEASUREMENT_OHLC}
-       WHERE ${tagsToString(tags)}
-       GROUP BY time(${aggregatedTime})`,
-      {
-        database: this.conf.stockDatabase,
-      }
-    );
+  public async getOHLC(tags: { base: string; quote: string; exchange: string }, aggregatedTime: string = '1m') {
+    try {
+      const ret = await this.influx.query(
+        `SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close
+         FROM ${MEASUREMENT_OHLC}
+         WHERE ${tagsToString(tags)}
+         GROUP BY time(${aggregatedTime})`,
+        {
+          database: this.conf.stockDatabase,
+        }
+      );
+      // TODO Check => console.log(ret);
+      return ret;
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
@@ -100,7 +91,11 @@ export class Influx {
    * @returns {string[]} Array of timestamp where data is missing
    * @memberof Influx
    */
-  public async getSeriesGap(measurement: string, tags: { [name: string]: string }, aggregatedTime: string = '1m'): Promise<string[]> {
+  public async getSeriesGap(
+    measurement: string,
+    tags: { [name: string]: string },
+    aggregatedTime: string = '1m'
+  ): Promise<string[]> {
     const query = `SELECT * FROM (
         SELECT max(close) as close 
         FROM ${measurement}
@@ -136,6 +131,23 @@ export class Influx {
     } catch (error) {
       logger.error(error);
       throw new Error(`Problem with query ${query}`);
+    }
+  }
+
+  /**
+   * Check if given database name exist. If not create it.
+   *
+   * @private
+   * @param {string} name
+   * @memberof Influx
+   */
+  private async createDatabaseIfNotExist(name: string) {
+    try {
+      const databases: string[] = await this.influx.getDatabaseNames();
+      // If not exist create it
+      if (!databases.includes(name)) await this.influx.createDatabase(name);
+    } catch (error) {
+      throw error;
     }
   }
 }

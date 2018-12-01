@@ -15,14 +15,15 @@ export async function restartWatchers(influx: Influx): Promise<any> {
   let instance: Watcher | null = null;
   try {
     const watchers: IWatcherConfig[] = await Watchers.getWatchers();
-    for (let i = 0; i < watchers.length; i++) {
-      const watcher: IWatcherConfig = watchers[i];
+    for (const watcher of watchers) {
       // If watcher not already running
-      if (!(await Watchers.runningWatchers.find(w => w.id === watcher.id))) {
+      if (!(Watchers.runningWatchers.find(w => w.id === watcher.id))) {
         // Create and configure the watcher
         instance = <Watcher>new (<any>watcherClasses)[watcher.type]({ ...watcher });
         instance.setInflux(influx);
-        instance.run();
+        instance.run().catch(error => {
+          throw error;
+        });
         // Push the watcher instance in the array of running watchers
         Watchers.runningWatchers.push(instance);
       }
@@ -46,7 +47,7 @@ export async function restartWatchers(influx: Influx): Promise<any> {
  */
 export async function stopWatchers(): Promise<any> {
   try {
-    Watchers.runningWatchers.forEach(watcher => watcher.stop());
+    Watchers.runningWatchers.forEach(async watcher => watcher.stop());
     Watchers.runningWatchers = [];
   } catch (error) {
     logger.error(error);
@@ -69,8 +70,7 @@ export async function watcherConfigurationExist(config: any) {
     keys.splice(keys.indexOf('extra'), 1);
   }
   // For each watcher already existing, check if same config exist {exhange, base, quote}
-  for (let i = 0; i < watchers.length; i++) {
-    const watcher = watchers[i];
+  for (const watcher of watchers) {
     let sameKeys = 0;
     keys.forEach(key => (watcher[key] === config[key] ? sameKeys++ : sameKeys));
     if (sameKeys === keys.length) return true;

@@ -4,10 +4,22 @@
   "description": "Cryptocurrencie market data watcher and storing into influxdb",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "docker": "docker-compose -f ./docker/docker-compose.yml up",
+    "test": "NODE_ENV=TEST nyc mocha -r ts-node/register test/index.ts",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "prettier": "prettier --write 'src/**/*.ts'",
+    "docker": "docker-compose -f ./docker/docker-compose.yml up -d",
     "pretest": "node_modules/tslint/bin/tslint --project .",
     "start": "ts-node -P ./tsconfig.json src/index.ts"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "all": true
   },
   "author": "",
   "license": "ISC",
@@ -26,11 +38,20 @@
     "winston": "^3.1.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/chai-http": "^3.0.5",
     "@types/hapi": "^17.6.4",
+    "@types/mocha": "^5.2.5",
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^5.3.1",
     "@types/uuid": "^3.4.4",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "coveralls": "^3.0.2",
     "lout": "^11.1.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "prettier": "^1.15.3",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.16.0",

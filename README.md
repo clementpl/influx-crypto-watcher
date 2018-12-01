@@ -1,4 +1,6 @@
-# Crypto market data aggregator
+# influx crypto watcher [![Build Status](https://travis-ci.org/clementpl/influx-crypto-watcher.svg?branch=master)](https://travis-ci.org/clementpl/influx-crypto-watcher) [![Coverage Status](https://coveralls.io/repos/github/clementpl/influx-crypto-watcher/badge.svg?branch=master)](https://coveralls.io/github/clementpl/influx-crypto-watcher?branch=master)
+
+Crypto market data aggregator 
 
 ## Description
 
