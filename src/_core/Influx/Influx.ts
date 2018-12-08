@@ -26,7 +26,7 @@ export class Influx {
     try {
       await this.createDatabaseIfNotExist(this.conf.stockDatabase);
       await this.createDatabaseIfNotExist(this.conf.eventDatabase);
-      this.createContinuousQuery();
+      await this.createContinuousQuery();
       logger.info(`[INFLUXDB] Connection successful: ${this.conf.host}:${this.conf.port}`);
     } catch (error) {
       logger.error(new Error(`[INFLUXDB] Connection error: ${this.conf.host}:${this.conf.port}`));
@@ -79,7 +79,8 @@ export class Influx {
       // TODO Check => console.log(ret);
       return ret;
     } catch (error) {
-      throw error;
+      logger.error(error);
+      throw new Error('[INFLUX] Problem while fetching OHLC data');
     }
   }
 
@@ -110,7 +111,7 @@ export class Influx {
       return ret.map((el: any) => el.time._nanoISO);
     } catch (error) {
       logger.error(error);
-      throw new Error(`Problem with query ${query}`);
+      throw new Error(`[INFLUX] Problem during query fetchGap\n${query}`);
     }
   }
 
@@ -131,7 +132,7 @@ export class Influx {
       return ret ? ret.count : 0;
     } catch (error) {
       logger.error(error);
-      throw new Error(`Problem with query ${query}`);
+      throw new Error(`[INFLUX] Problem with count query\n${query}`);
     }
   }
 
@@ -142,6 +143,7 @@ export class Influx {
      INTO OHLC_FILLED FROM OHLC 
      GROUP BY time(1m), * fill(linear)
     */
+   try {
     const query: string = `
       SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume
       INTO ${MEASUREMENT_OHLC_FILLED}
@@ -153,8 +155,12 @@ export class Influx {
     // If queryName not exist
     const queryName = 'fill_OHLC';
     if (!queries.find(q => q.name === queryName)) {
-      this.influx.createContinuousQuery(queryName, query, this.conf.stockDatabase);
+      await this.influx.createContinuousQuery(queryName, query, this.conf.stockDatabase);
     }
+   } catch(error) {
+     logger.error(error);
+     throw new Error('[INFLUX] Problem while creating continuous query');
+   }
   }
 
   /**
