@@ -1,9 +1,10 @@
 import * as moment from 'moment';
+import { config } from '../../../../config/config';
 import { sleep } from '../../helpers';
 import { IWatcherConfig, Watcher } from '../Watcher';
 import { Exchange, OHLCV } from '../../Exchange/Exchange';
 import { logger } from '../../../logger';
-import { MEASUREMENT_OHLC } from '../../Influx/constants';
+import { MEASUREMENT_OHLC, MEASUREMENT_OHLC_FILLED } from '../../Influx/constants';
 
 export interface IMarketWatcherConfig extends IWatcherConfig {
   exchange: string;
@@ -100,9 +101,9 @@ export class MarketWatcher extends Watcher {
    * @param {IMarketWatcherConfig} config
    * @memberof MarketWatcher
    */
-  private checkConfig(config: IMarketWatcherConfig) {
+  private checkConfig(conf: IMarketWatcherConfig) {
     // Can't create MarketWatcher with refreshInterval < 1 second
-    if (config.extra.refreshInterval < 1000) {
+    if (conf.extra.refreshInterval < 1000) {
       throw new Error('[WATCHER] Cannot create market watcher with refreshInterval < 1000 (1 seconde)');
     }
   }
@@ -143,7 +144,7 @@ export class MarketWatcher extends Watcher {
       const end: moment.Moment = moment().subtract(batchSize, 'm');
       let lastCandleFetch: OHLCV | null = null;
       let data: OHLCV[] = [];
-      while (!this.shouldStop || end.diff(start, 'm') > batchSize) {
+      while (!this.shouldStop && end.diff(start, 'm') > batchSize) {
         // Fetch missing data and write it to influx
         data = await this.exchange.getCandles(this.symbol, {
           limit: batchSize,
@@ -194,7 +195,7 @@ export class MarketWatcher extends Watcher {
         const batchSize = 500;
         let i = 0;
         // Loop over missigPoints timestamp
-        while (!this.shouldStop || i < missingPoints.length) {
+        while (!this.shouldStop && i < missingPoints.length) {
           let j = i + 1;
           const start = moment(missingPoints[i]);
           let next = moment(missingPoints[j]);
