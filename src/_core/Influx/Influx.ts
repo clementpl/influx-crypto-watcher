@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import { InfluxDB } from 'influx';
 import { logger } from '../../logger';
 import { OHLCV } from '../Exchange/Exchange';
-import { MEASUREMENT_OHLC } from './constants';
+import { MEASUREMENT_OHLC, MEASUREMENT_OHLC_FILLED } from './constants';
 import { tagsToString } from './helpers';
 
 export interface InfluxConfig {
@@ -26,6 +26,7 @@ export class Influx {
     try {
       await this.createDatabaseIfNotExist(this.conf.stockDatabase);
       await this.createDatabaseIfNotExist(this.conf.eventDatabase);
+      this.createContinuousQuery();
       logger.info(`[INFLUXDB] Connection successful: ${this.conf.host}:${this.conf.port}`);
     } catch (error) {
       logger.error(new Error(`[INFLUXDB] Connection error: ${this.conf.host}:${this.conf.port}`));
@@ -131,6 +132,28 @@ export class Influx {
     } catch (error) {
       logger.error(error);
       throw new Error(`Problem with query ${query}`);
+    }
+  }
+
+  public async createContinuousQuery() {
+    /*
+     To refill every serie use:
+     SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume 
+     INTO OHLC_FILLED FROM OHLC 
+     GROUP BY time(1m), * fill(linear)
+    */
+    const query: string = `
+      SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume
+      INTO ${MEASUREMENT_OHLC_FILLED}
+      FROM ${MEASUREMENT_OHLC}
+      GROUP BY time(1m), * fill(linear)
+    `;
+    // Fetch existing queries
+    const queries = await this.influx.showContinousQueries(this.conf.stockDatabase);
+    // If queryName not exist
+    const queryName = 'fill_OHLC';
+    if (!queries.find(q => q.name === queryName)) {
+      this.influx.createContinuousQuery(queryName, query, this.conf.stockDatabase);
     }
   }
 
