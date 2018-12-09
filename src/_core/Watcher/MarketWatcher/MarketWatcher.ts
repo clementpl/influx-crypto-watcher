@@ -30,6 +30,7 @@ export class MarketWatcher extends Watcher {
   public conf: IMarketWatcherConfig;
   private exchange: Exchange;
   private shouldStop: boolean = false;
+  private interval: { id: NodeJS.Timeout | undefined } = { id: undefined };
 
   constructor(conf: IMarketWatcherConfig) {
     super(conf);
@@ -81,7 +82,7 @@ export class MarketWatcher extends Watcher {
         throw new Error(`Error while running market watcher loop ${this.conf.exchange} (${this.symbol})`);
       }
       // Sleep (make interval)
-      await sleep(this.conf.extra.refreshInterval);
+      await sleep(this.conf.extra.refreshInterval, this.interval);
     }
   }
 
@@ -92,6 +93,10 @@ export class MarketWatcher extends Watcher {
    */
   public async stopWatcher(): Promise<void> {
     this.shouldStop = true;
+    if (this.interval.id) {
+      clearTimeout(this.interval.id);
+      this.interval.id = undefined;
+    }
   }
 
   /**
