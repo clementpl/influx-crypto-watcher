@@ -4,6 +4,7 @@ import { logger } from '../../logger';
 import { OHLCV } from '../Exchange/Exchange';
 import { MEASUREMENT_OHLC, MEASUREMENT_OHLC_FILLED } from './constants';
 import { tagsToString } from './helpers';
+import { sleep } from '../helpers';
 
 export interface InfluxConfig {
   host: string;
@@ -95,13 +96,13 @@ export class Influx {
    */
   public async getSeriesGap(
     measurement: string,
-    tags: { [name: string]: string },
+    tags?: { [name: string]: string },
     aggregatedTime: string = '1m'
   ): Promise<string[]> {
     const query = `SELECT * FROM (
         SELECT max(close) as close 
         FROM ${measurement}
-        WHERE ${tagsToString(tags)}
+        ${tags ? `WHERE ${tagsToString(tags)}` : ''}
         GROUP BY time(${aggregatedTime}) fill(-1)
       ) WHERE close = -1`;
     try {
@@ -142,25 +143,55 @@ export class Influx {
      SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume 
      INTO OHLC_FILLED FROM OHLC 
      GROUP BY time(1m), * fill(linear)
-    */
-   try {
-    const query: string = `
+     */
+    try {
+      const query: string = `
       SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume
       INTO ${MEASUREMENT_OHLC_FILLED}
       FROM ${MEASUREMENT_OHLC}
       GROUP BY time(1m), * fill(linear)
     `;
-    // Fetch existing queries
-    const queries = await this.influx.showContinousQueries(this.conf.stockDatabase);
-    // If queryName not exist
-    const queryName = 'fill_OHLC';
-    if (!queries.find(q => q.name === queryName)) {
-      await this.influx.createContinuousQuery(queryName, query, this.conf.stockDatabase);
+      // Fetch existing queries
+      const queries = await this.influx.showContinousQueries(this.conf.stockDatabase);
+      // If queryName not exist
+      const queryName = 'fill_OHLC';
+      if (!queries.find(q => q.name === queryName)) {
+        await this.influx.createContinuousQuery(queryName, query, this.conf.stockDatabase);
+      }
+      // Refresh filled measurement at start
+      this.refreshOHLCFILLED().catch(error => {
+        throw error;
+      });
+    } catch (error) {
+      logger.error(error);
+      throw new Error('[INFLUX] Problem while creating continuous query');
     }
-   } catch(error) {
-     logger.error(error);
-     throw new Error('[INFLUX] Problem while creating continuous query');
-   }
+  }
+
+  public async refreshOHLCFILLED() {
+    try {
+      // Query creator set time in where clause
+      const query: (time: string) => string = (time: string) => `
+        SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume
+        INTO ${MEASUREMENT_OHLC_FILLED}
+        FROM ${MEASUREMENT_OHLC}
+        WHERE time > '${time}'
+        GROUP BY time(1m), * fill(linear)
+      `;
+      const ret = await this.getSeriesGap(MEASUREMENT_OHLC_FILLED);
+      if (ret.length > 0) {
+        const start = moment(ret[0])
+          .subtract(100, 'm')
+          .utc()
+          .format();
+        // Wait 30 seconds then refresh (allow watcher to fetch missing points)
+        await sleep(30 * 1000);
+        await this.influx.query(query(start), { database: this.conf.stockDatabase });
+      }
+    } catch (error) {
+      logger.error(error);
+      throw new Error(`[INFLUX] Problem while refreshing ${MEASUREMENT_OHLC_FILLED}`);
+    }
   }
 
   /**
