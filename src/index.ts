@@ -13,9 +13,10 @@ startServer().catch(error => {
 /* tslint:disable */
 // Catch SIGINT/SIGNTERM/KILL ,...
 require('death')(() => {
-  stopServer().catch(error => {
-    logger.error(error);
-    logger.error(new Error('Unexpected Error'));
-    process.exit(1);
+    stopServer().catch(error => {
+      logger.error(error);
+      logger.error(new Error('Unexpected Error'));
+      process.exit(1);
+    });
   });
-});
+  
