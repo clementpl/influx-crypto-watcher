@@ -54,7 +54,7 @@ export async function startServer(shouldRestartWatchers: boolean = true): Promis
 
 export async function stopServer(): Promise<void> {
   try {
-    logger.info('\nShutting down server...');
+    logger.info('Shutting down server...');
     await Mongo.close();
     await API.stop();
   } catch (error) {
