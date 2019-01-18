@@ -7,7 +7,8 @@
     "test": "NODE_ENV=TEST nyc mocha -r ts-node/register test/index.ts",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --write 'src/**/*.ts'",
-    "docker": "docker-compose -f ./docker/docker-compose.yml up -d",
+    "docker-start": "docker-compose -f ./docker/docker-compose.yml up -d",
+    "docker-stop": "docker-compose -f ./docker/docker-compose.yml stop",
     "pretest": "node_modules/tslint/bin/tslint --project .",
     "start": "ts-node -P ./tsconfig.json src/index.ts"
   },
