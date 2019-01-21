@@ -1,5 +1,4 @@
 import * as moment from 'moment';
-import { config } from '../../../../config/config';
 import { sleep } from '../../helpers';
 import { IWatcherConfig, Watcher } from '../Watcher';
 import { Exchange, OHLCV } from '../../Exchange/Exchange';
@@ -35,8 +34,7 @@ export class MarketWatcher extends Watcher {
   constructor(conf: IMarketWatcherConfig) {
     super(conf);
     // Merge with default conf
-    Object.assign(
-      this.conf,
+    this.conf = Object.assign(
       {
         type: 'MarketWatcher',
         extra: {
@@ -175,6 +173,7 @@ export class MarketWatcher extends Watcher {
         { base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange },
         data
       );
+      // TODO force refresh ohlc_Filled => this.getInflux().refreshOHLCFILLED(true);
     } catch (error) {
       logger.error(error);
       throw new Error(`[Watcher] Error when filling history ${this.conf.exchange} (${this.symbol})`);

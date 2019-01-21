@@ -2,6 +2,8 @@
 
 Crypto market data aggregator
 
+This project is used by [influx crypto trader](https://github.com/clementpl/influx-crypto-trader) to make a complete system of trading (with backtesting)
+
 ## Description
 
 This application help gathering data about cryptocurrencies (stock price, signals, tweet) and store those data in [InfluxDB](https://github.com/influxdata/influxdb)
