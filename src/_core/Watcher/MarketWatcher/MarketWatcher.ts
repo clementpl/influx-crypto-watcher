@@ -129,8 +129,8 @@ export class MarketWatcher extends Watcher {
     ) {
       await this.fillHistory(this.conf.extra.maxHistory);
     }
-    // Fill missing point by fetching them (exchange)
-    await this.fillGap();
+    // Else fill missing point by fetching them (exchange)
+    else await this.fillGap();
   }
 
   /**
@@ -157,6 +157,8 @@ export class MarketWatcher extends Watcher {
         });
         // If the new data fetched is the same as the last data fetched, there is no more history to fetch, stop...
         if (lastCandleFetch && data[0].time === lastCandleFetch.time) {
+          // refresh OHLC with new data
+          await this.getInflux().refreshOHLCFILLED(tags, true);
           return;
         }
         await this.getInflux().writeOHLC(tags, data);
