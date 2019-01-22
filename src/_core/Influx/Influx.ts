@@ -124,8 +124,12 @@ export class Influx {
    * @returns {Promise<number>}
    * @memberof Influx
    */
-  public async count(measurement: string, tags: { [name: string]: string }): Promise<number> {
-    const query: string = `SELECT count(close) FROM ${measurement} WHERE ${tagsToString(tags)}`;
+  public async count(measurement: string, tags?: { [name: string]: string }): Promise<number> {
+    const query: string = `
+      SELECT count(close)
+      FROM ${measurement}
+      ${tags ? `WHERE ${tagsToString(tags)}` : ''}
+    `;
     try {
       const ret: any = (<any>await this.influx.query(query, {
         database: this.conf.stockDatabase,
@@ -158,35 +162,37 @@ export class Influx {
       if (!queries.find(q => q.name === queryName)) {
         await this.influx.createContinuousQuery(queryName, query, this.conf.stockDatabase);
       }
-      // Refresh filled measurement at start
-      this.refreshOHLCFILLED().catch(error => {
-        throw error;
-      });
     } catch (error) {
       logger.error(error);
       throw new Error('[INFLUX] Problem while creating continuous query');
     }
   }
 
-  public async refreshOHLCFILLED() {
+  public async refreshOHLCFILLED(tags: { [name: string]: string }, force: boolean = false): Promise<void> {
     try {
       // Query creator set time in where clause
-      const query: (time: string) => string = (time: string) => `
+      const query: (time?: string) => string = (time?: string) => `
         SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume
         INTO ${MEASUREMENT_OHLC_FILLED}
         FROM ${MEASUREMENT_OHLC}
-        WHERE time > '${time}'
+        WHERE ${tagsToString(tags)}
+        ${time ? `AND time > '${time}'` : ''}
         GROUP BY time(1m), * fill(linear)
       `;
-      const ret = await this.getSeriesGap(MEASUREMENT_OHLC_FILLED);
-      if (ret.length > 0) {
-        const start = moment(ret[0])
-          .subtract(100, 'm')
-          .utc()
-          .format();
-        // Wait 30 seconds then refresh (allow watcher to fetch missing points)
-        await sleep(30 * 1000);
-        await this.influx.query(query(start), { database: this.conf.stockDatabase });
+      // If for refresh the whole serie
+      if (force) {
+        await this.influx.query(query(), { database: this.conf.stockDatabase });
+      } else {
+        const ret = await this.getSeriesGap(MEASUREMENT_OHLC_FILLED);
+        if (ret.length > 0) {
+          const start = moment(ret[0])
+            .subtract(100, 'm')
+            .utc()
+            .format();
+          // Wait 30 seconds then refresh (allow watcher to fetch missing points)
+          await sleep(30 * 1000);
+          await this.influx.query(query(start), { database: this.conf.stockDatabase });
+        }
       }
     } catch (error) {
       logger.error(error);

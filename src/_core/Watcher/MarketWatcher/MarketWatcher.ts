@@ -147,6 +147,8 @@ export class MarketWatcher extends Watcher {
       const end: moment.Moment = moment().subtract(batchSize, 'm');
       let lastCandleFetch: OHLCV | null = null;
       let data: OHLCV[] = [];
+      // influx tags
+      const tags = { base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange };
       while (!this.shouldStop && end.diff(start, 'm') > batchSize) {
         // Fetch missing data and write it to influx
         data = await this.exchange.getCandles(this.symbol, {
@@ -157,10 +159,7 @@ export class MarketWatcher extends Watcher {
         if (lastCandleFetch && data[0].time === lastCandleFetch.time) {
           return;
         }
-        await this.getInflux().writeOHLC(
-          { base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange },
-          data
-        );
+        await this.getInflux().writeOHLC(tags, data);
         lastCandleFetch = data[0];
         end.subtract(batchSize, 'm');
       }
@@ -169,11 +168,9 @@ export class MarketWatcher extends Watcher {
         limit: batchSize,
         since: start.toDate().getTime(),
       });
-      await this.getInflux().writeOHLC(
-        { base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange },
-        data
-      );
-      // TODO force refresh ohlc_Filled => this.getInflux().refreshOHLCFILLED(true);
+      await this.getInflux().writeOHLC(tags, data);
+      // Refresh ohlcFilled after history retrieve (then OHLC_FILLED refresh will be handle with a continous query)
+      await this.getInflux().refreshOHLCFILLED(tags, true);
     } catch (error) {
       logger.error(error);
       throw new Error(`[Watcher] Error when filling history ${this.conf.exchange} (${this.symbol})`);
@@ -188,13 +185,10 @@ export class MarketWatcher extends Watcher {
    */
   private async fillGap(): Promise<void> {
     try {
+      const tags = { base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange };
       // Check if data gap exist for the given symbol (= missing points)
       // return Array of timestamp where data is missing
-      const missingPoints = await this.getInflux().getSeriesGap(
-        MEASUREMENT_OHLC,
-        { base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange },
-        '1m'
-      );
+      const missingPoints = await this.getInflux().getSeriesGap(MEASUREMENT_OHLC, tags, '1m');
       if (missingPoints.length > 0) {
         const batchSize = 500;
         let i = 0;
@@ -216,10 +210,7 @@ export class MarketWatcher extends Watcher {
             since: start.toDate().getTime(),
           });
           if (data.length > 0) {
-            await this.getInflux().writeOHLC(
-              { base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange },
-              data
-            );
+            await this.getInflux().writeOHLC(tags, data);
           }
           i = j;
         }
@@ -228,6 +219,7 @@ export class MarketWatcher extends Watcher {
             this.symbol
           })`
         );
+        this.getInflux().refreshOHLCFILLED(tags);
       }
     } catch (error) {
       logger.error(error);
