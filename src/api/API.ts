@@ -39,6 +39,7 @@ export class API {
       const server = new Server({
         port: config.port,
         host: config.host,
+        address: config.host !== 'localhost' ? '0.0.0.0' : '127.0.0.1',
         routes: { cors: true },
       });
 
