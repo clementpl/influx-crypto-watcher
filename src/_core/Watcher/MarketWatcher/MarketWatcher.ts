@@ -219,7 +219,7 @@ export class MarketWatcher extends Watcher {
             this.symbol
           })`
         );
-        this.getInflux().refreshOHLCFILLED(tags);
+        await this.getInflux().refreshOHLCFILLED(tags);
       }
     } catch (error) {
       logger.error(error);

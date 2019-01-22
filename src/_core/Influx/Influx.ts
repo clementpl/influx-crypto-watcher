@@ -181,6 +181,7 @@ export class Influx {
       `;
       // If for refresh the whole serie
       if (force) {
+        console.log('refreshOHLCFILLED')
         await this.influx.query(query(), { database: this.conf.stockDatabase });
       } else {
         const ret = await this.getSeriesGap(MEASUREMENT_OHLC_FILLED);
