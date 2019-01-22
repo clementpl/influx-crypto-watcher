@@ -3,7 +3,7 @@ import { sleep } from '../../helpers';
 import { IWatcherConfig, Watcher } from '../Watcher';
 import { Exchange, OHLCV } from '../../Exchange/Exchange';
 import { logger } from '../../../logger';
-import { MEASUREMENT_OHLC, MEASUREMENT_OHLC_FILLED } from '../../Influx/constants';
+import { MEASUREMENT_OHLC } from '../../Influx/constants';
 
 export interface IMarketWatcherConfig extends IWatcherConfig {
   exchange: string;
@@ -47,6 +47,12 @@ export class MarketWatcher extends Watcher {
     this.checkConfig(this.conf);
     this.symbol = `${this.conf.base}/${this.conf.quote}`;
     this.exchange = new Exchange({ name: this.conf.exchange });
+  }
+
+  public async init(): Promise<void> {
+    if (!(await this.exchange.getExchangeInfo(this.symbol))) {
+      throw new Error(`[WATCHER] symbol ${this.symbol} doesn't exist on ${this.conf.exchange}`);
+    }
   }
 
   /**

@@ -42,10 +42,10 @@ export class Exchange {
    * @returns {Promise<Market>}
    * @memberof Exchange
    */
-  public async getExchangeInfo(symbol: string): Promise<ccxt.Market> {
+  public async getExchangeInfo(symbol: string): Promise<ccxt.Market | undefined> {
     if (!this.marketsInfo) this.marketsInfo = await this.exchange.fetchMarkets();
-    const markets = this.marketsInfo.filter(market => market.id === symbol);
-    if (markets.length !== 1) throw new Error(`Market ${symbol} not found`);
+    const markets = this.marketsInfo.filter(market => market.symbol === symbol);
+    if (markets.length !== 1) return undefined;
     return markets[0];
   }
 

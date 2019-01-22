@@ -82,26 +82,37 @@ export class Watchers {
   }
 
   public static async createWatcher(request: Request): Promise<any> {
-    const watcherConfig = <IWatcherConfig>request.payload;
-    if (watcherConfig.id) {
-      return Boom.badRequest('Cannot create a new watcher with an id');
+    try {
+      const watcherConfig = <IWatcherConfig>request.payload;
+      if (watcherConfig.id) {
+        return Boom.badRequest('Cannot create a new watcher with an id');
+      }
+      if (!(<any>watcherClasses)[watcherConfig.type]) {
+        return Boom.badRequest(`Watcher type ${watcherConfig.type} doesn't exists`);
+      }
+      // Check if watcher with same config already exist
+      if (await watcherConfigurationExist(watcherConfig)) {
+        return Boom.badRequest(`Watcher configuration already exist`);
+      }
+      // Create the watcher (in function of the given type)
+      const watcher: Watcher = new (<any>watcherClasses)[watcherConfig.type](watcherConfig);
+      // Init watcher (will make async checking to be sure it can be run)
+      try {
+        await watcher.init();
+      } catch (error) {
+        return Boom.badRequest(error);
+      }
+      watcher.setInflux((<any>request.server.app).influx);
+      watcher.run().catch(error => {
+        throw error;
+      });
+      // Push the new running watchers
+      Watchers.runningWatchers.push(watcher);
+      return { id: watcher.id };
+    } catch (error) {
+      logger.error(error);
+      return Boom.internal(error);
     }
-    if (!(<any>watcherClasses)[watcherConfig.type]) {
-      return Boom.badRequest(`Watcher type ${watcherConfig.type} doesn't exists`);
-    }
-    // Check if watcher with same config already exist
-    if (await watcherConfigurationExist(watcherConfig)) {
-      return Boom.badRequest(`Watcher configuration already exist`);
-    }
-    // Create the watcher (in function of the given type)
-    const watcher: Watcher = new (<any>watcherClasses)[watcherConfig.type](watcherConfig);
-    watcher.setInflux((<any>request.server.app).influx);
-    watcher.run().catch(error => {
-      throw error;
-    });
-    // Push the new running watchers
-    Watchers.runningWatchers.push(watcher);
-    return { id: watcher.id };
   }
 
   public static async startWatcher(request: Request): Promise<any> {
@@ -114,6 +125,7 @@ export class Watchers {
 
       // Create and configure the watcher
       const instance = <Watcher>new (<any>watcherClasses)[watcher.type]((<any>watcher)._doc);
+      await instance.init();
       instance.setInflux((<any>request.server.app).influx);
       instance.run().catch(error => {
         throw error;

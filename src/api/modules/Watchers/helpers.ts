@@ -17,9 +17,10 @@ export async function restartWatchers(influx: Influx): Promise<any> {
     const watchers: IWatcherConfig[] = await Watchers.getWatchers();
     for (const watcher of watchers) {
       // If watcher not already running
-      if (!(Watchers.runningWatchers.find(w => w.id === watcher.id))) {
+      if (!Watchers.runningWatchers.find(w => w.id === watcher.id)) {
         // Create and configure the watcher
         instance = <Watcher>new (<any>watcherClasses)[watcher.type]({ ...watcher });
+        await instance.init();
         instance.setInflux(influx);
         instance.run().catch(error => {
           throw error;
@@ -47,7 +48,7 @@ export async function restartWatchers(influx: Influx): Promise<any> {
  */
 export async function stopWatchers(): Promise<any> {
   try {
-    Watchers.runningWatchers.forEach(async watcher => watcher.stop());
+    Watchers.runningWatchers.forEach(watcher => watcher.stop());
     Watchers.runningWatchers = [];
   } catch (error) {
     logger.error(error);

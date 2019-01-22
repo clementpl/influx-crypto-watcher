@@ -48,6 +48,14 @@ export abstract class Watcher {
   }
 
   /**
+   * Init the watcher (can be use for async checking before starting it)
+   *
+   * @abstract
+   * @memberof Watcher
+   */
+  public abstract async init(): Promise<void>;
+
+  /**
    * Start the watcher
    *
    * @abstract
@@ -66,24 +74,26 @@ export abstract class Watcher {
   public async run(): Promise<void> {
     this.status = WatcherStatus.RUNNING;
     await this.save().catch(error => logger.error(error));
-    this.runWatcher().catch(async error => {
-      logger.error(error);
-      try {
-        if (this.restart < 3) {
-          this.restart += 1;
-          logger.info(`[Watcher] Try restarting (${this.restart}/3) watcher ${this.id}`);
-          await this.stop();
-          this.run().catch(err => {
-            throw err;
-          });
-        } else {
-          await this.stop();
-          logger.error(`[Watcher] Stopping watcher ${this.id} (can't restart it)`);
+    this.runWatcher()
+      // On error try to restart the watcher 3 times before stopping it
+      .catch(async error => {
+        logger.error(error);
+        try {
+          if (this.restart < 3) {
+            this.restart += 1;
+            logger.info(`[Watcher] Try restarting (${this.restart}/3) watcher ${this.id}`);
+            await this.stop();
+            this.run().catch(err => {
+              throw err;
+            });
+          } else {
+            await this.stop();
+            logger.error(`[Watcher] Stopping watcher ${this.id} (can't restart it)`);
+          }
+        } catch (error) {
+          throw error;
         }
-      } catch (e) {
-        throw e;
-      }
-    });
+      });
   }
 
   public async stop(): Promise<void> {
