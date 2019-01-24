@@ -3,7 +3,7 @@ import { sleep } from '../../helpers';
 import { IWatcherConfig, Watcher } from '../Watcher';
 import { Exchange, OHLCV } from '../../Exchange/Exchange';
 import { logger } from '../../../logger';
-import { MEASUREMENT_OHLC } from '../../Influx/constants';
+import { MEASUREMENT_OHLC, MEASUREMENT_OHLC_FILLED } from '../../Influx/constants';
 
 export interface IMarketWatcherConfig extends IWatcherConfig {
   exchange: string;
@@ -95,11 +95,23 @@ export class MarketWatcher extends Watcher {
    *
    * @memberof MarketWatcher
    */
-  public async stopWatcher(): Promise<void> {
+  public async stopWatcher(flushData: boolean): Promise<void> {
+    logger.info(`[WATCHER] Watcher stopped on ${this.conf.exchange}: ${this.symbol}`);
     this.shouldStop = true;
     if (this.interval.id) {
       clearTimeout(this.interval.id);
       this.interval.id = undefined;
+    }
+    if (flushData) {
+      const { base, quote, exchange } = this.conf;
+      const tags = { base, quote, exchange };
+      // Flush all OHLC data
+      [MEASUREMENT_OHLC_FILLED, MEASUREMENT_OHLC].forEach(measurement =>
+        // flush
+        this.getInflux()
+          .dropSerie(measurement, tags)
+          .catch((error: Error) => logger.error(error))
+      );
     }
   }
 

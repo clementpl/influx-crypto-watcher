@@ -69,7 +69,7 @@ export abstract class Watcher {
    * @abstract
    * @memberof Watcher
    */
-  public abstract async stopWatcher(): Promise<void>;
+  public abstract async stopWatcher(flushData: boolean): Promise<void>;
 
   public async run(): Promise<void> {
     this.status = WatcherStatus.RUNNING;
@@ -96,9 +96,9 @@ export abstract class Watcher {
       });
   }
 
-  public async stop(): Promise<void> {
+  public async stop(flushData: boolean = false): Promise<void> {
     this.status = WatcherStatus.STOPPED;
-    await this.stopWatcher();
+    await this.stopWatcher(flushData);
     await this.save();
   }
 

@@ -10,7 +10,9 @@ export const routes: ServerRoute[] = [
     options: {
       validate: {
         payload: {
-          type: Joi.string().valid('MarketWatcher').required(),
+          type: Joi.string()
+            .valid('MarketWatcher')
+            .required(),
           base: Joi.string().required(),
           quote: Joi.string().required(),
           exchange: Joi.string().required(),
@@ -107,6 +109,9 @@ export const routes: ServerRoute[] = [
       validate: {
         params: Joi.object({
           id: Joi.string().required(),
+        }),
+        query: Joi.object({
+          flush: Joi.boolean().optional(),
         }),
       },
       tags: ['Watcher', 'API'],

@@ -200,6 +200,12 @@ export class Influx {
     }
   }
 
+  public async dropSerie(measurement: string, tags: { [name: string]: any }) {
+    await this.influx.query(`DROP SERIES FROM "${measurement}" WHERE ${tagsToString(tags)}`, {
+      database: this.conf.stockDatabase,
+    });
+  }
+
   /**
    * Check if given database name exist. If not create it.
    *

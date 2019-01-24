@@ -1,10 +1,11 @@
 import * as Boom from 'boom';
-import { Request } from 'hapi';
+import { Request, RequestQuery } from 'hapi';
 import { WatcherModel, IWatcherModel } from '../../../_core/Watcher/model';
 import { IWatcherConfig, Watcher } from '../../../_core/Watcher/Watcher';
 import { watcherClasses } from '../../../_core/Watcher/exports';
 import { logger } from '../../../logger';
 import { restartWatchers, watcherConfigurationExist, stopWatchers } from './helpers';
+import { MEASUREMENT_OHLC } from '../../../_core/Influx/constants';
 
 /**
  * Handle endpoints to manage multiple watchers
@@ -158,14 +159,15 @@ export class Watchers {
   public static async deleteWatcher(request: Request): Promise<any> {
     try {
       const { id } = request.params;
+      const { flush } = request.query as RequestQuery;
       const running = Watchers.runningWatchers.find(w => w.id === id);
       if (running) {
-        await running.stop();
+        await running.stop(Boolean(flush) === true ? true : false);
         const runningIdx = Watchers.runningWatchers.map(w => w.id).indexOf(running.id);
         Watchers.runningWatchers.splice(runningIdx, 1);
       }
       await WatcherModel.findOneAndDelete({ id });
-      return { msg: '' };
+      return { msg: `Watcher ${id} stopped` };
     } catch (error) {
       logger.error(error);
       return Boom.internal(error);
