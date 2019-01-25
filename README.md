@@ -37,7 +37,13 @@ curl --request POST --url http://localhost:3000/watchers --header 'content-type:
     }'
 ```
 
-Then go to grafana (http://localhost:3001/), import the dashboard given in "docker/grafana/dashboard/cypto-watcher.json"
+Then go to grafana (http://localhost:3001/):
+
+- Configure data source
+
+![datasource](/docker/grafana/data-source-conf-example.png)
+
+- import the dashboard given in "docker/grafana/dashboard/cypto-watcher.json"
 
 ![dashboard](/docker/grafana/dashboard/screen.png)
 
