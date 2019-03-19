@@ -4,4 +4,4 @@ package-lock.json
 .nyc_output/
 .coveralls.yml
 log/
-config/
+mysnapshot/

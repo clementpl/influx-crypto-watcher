@@ -17,11 +17,12 @@ services:
     container_name: influxdb
     ports:
       - '8086:8086'
-    restart: always
-    #volumes:
+      - '8088:8088'
+    restart:
+      always
       # Data persistency
       # sudo mkdir -p /srv/docker/influxdb/data
-      #- /srv/docker/influxdb/data:/var/lib/influxdb
+      # - /srv/docker/influxdb/data:/var/lib/influxdb
     #configs:
     #  - source: influx_config
   grafana:

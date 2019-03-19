@@ -9,6 +9,7 @@
     "prettier": "prettier --write 'src/**/*.ts'",
     "docker-start": "docker-compose -f ./docker/docker-compose.yml up -d",
     "docker-stop": "docker-compose -f ./docker/docker-compose.yml stop",
+    "init-influx-test": "bash ./docker/influx/init-test.sh",
     "pretest": "node_modules/tslint/bin/tslint --project .",
     "start": "ts-node -P ./tsconfig.json src/index.ts"
   },
