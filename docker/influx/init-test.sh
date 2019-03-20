@@ -1,5 +1,5 @@
 path=$(dirname "$0")
-docker cp $path/docker/influx/testset influxdb:/
+docker cp $path/testset influxdb:/
 docker exec influxdb influxd restore -portable /testset
 
 # Make backup
