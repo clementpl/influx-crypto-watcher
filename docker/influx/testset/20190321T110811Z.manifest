@@ -1,0 +1,425 @@
+{
+  "meta": {
+    "fileName": "20190321T110811Z.meta",
+    "size": 5061
+  },
+  "limited": false,
+  "files": [
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 318,
+      "fileName": "20190321T110811Z.s318.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 319,
+      "fileName": "20190321T110811Z.s319.tar.gz",
+      "size": 787968,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 320,
+      "fileName": "20190321T110811Z.s320.tar.gz",
+      "size": 1311232,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 321,
+      "fileName": "20190321T110811Z.s321.tar.gz",
+      "size": 1274368,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 322,
+      "fileName": "20190321T110811Z.s322.tar.gz",
+      "size": 1296896,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 323,
+      "fileName": "20190321T110811Z.s323.tar.gz",
+      "size": 651776,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 324,
+      "fileName": "20190321T110811Z.s324.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 325,
+      "fileName": "20190321T110811Z.s325.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 326,
+      "fileName": "20190321T110811Z.s326.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 327,
+      "fileName": "20190321T110811Z.s327.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 328,
+      "fileName": "20190321T110811Z.s328.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 329,
+      "fileName": "20190321T110811Z.s329.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 330,
+      "fileName": "20190321T110811Z.s330.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 331,
+      "fileName": "20190321T110811Z.s331.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 332,
+      "fileName": "20190321T110811Z.s332.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 333,
+      "fileName": "20190321T110811Z.s333.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 334,
+      "fileName": "20190321T110811Z.s334.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 335,
+      "fileName": "20190321T110811Z.s335.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 336,
+      "fileName": "20190321T110811Z.s336.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 337,
+      "fileName": "20190321T110811Z.s337.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 338,
+      "fileName": "20190321T110811Z.s338.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 339,
+      "fileName": "20190321T110811Z.s339.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 340,
+      "fileName": "20190321T110811Z.s340.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 341,
+      "fileName": "20190321T110811Z.s341.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 342,
+      "fileName": "20190321T110811Z.s342.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 343,
+      "fileName": "20190321T110811Z.s343.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 344,
+      "fileName": "20190321T110811Z.s344.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 345,
+      "fileName": "20190321T110811Z.s345.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 346,
+      "fileName": "20190321T110811Z.s346.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 347,
+      "fileName": "20190321T110811Z.s347.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 348,
+      "fileName": "20190321T110811Z.s348.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 349,
+      "fileName": "20190321T110811Z.s349.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 350,
+      "fileName": "20190321T110811Z.s350.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 351,
+      "fileName": "20190321T110811Z.s351.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 352,
+      "fileName": "20190321T110811Z.s352.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 353,
+      "fileName": "20190321T110811Z.s353.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 354,
+      "fileName": "20190321T110811Z.s354.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 355,
+      "fileName": "20190321T110811Z.s355.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 356,
+      "fileName": "20190321T110811Z.s356.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 357,
+      "fileName": "20190321T110811Z.s357.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 358,
+      "fileName": "20190321T110811Z.s358.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 359,
+      "fileName": "20190321T110811Z.s359.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 360,
+      "fileName": "20190321T110811Z.s360.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 361,
+      "fileName": "20190321T110811Z.s361.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 362,
+      "fileName": "20190321T110811Z.s362.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 363,
+      "fileName": "20190321T110811Z.s363.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 364,
+      "fileName": "20190321T110811Z.s364.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 365,
+      "fileName": "20190321T110811Z.s365.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 366,
+      "fileName": "20190321T110811Z.s366.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 367,
+      "fileName": "20190321T110811Z.s367.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 368,
+      "fileName": "20190321T110811Z.s368.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    },
+    {
+      "database": "test_crypto_series",
+      "policy": "autogen",
+      "shardID": 369,
+      "fileName": "20190321T110811Z.s369.tar.gz",
+      "size": 1024,
+      "lastModified": 0
+    }
+  ]
+}
