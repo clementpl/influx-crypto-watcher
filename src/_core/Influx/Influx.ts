@@ -192,7 +192,7 @@ export class Influx {
             .utc()
             .format();
           // Wait 30 seconds then refresh (allow watcher to fetch missing points)
-          await sleep(30 * 1000);
+          // await sleep(30 * 1000);
           await this.influx.query(query(start), { database: this.conf.stockDatabase });
           console.log('refresh FILLED DONE');
         }
