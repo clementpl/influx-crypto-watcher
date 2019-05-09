@@ -184,7 +184,9 @@ export class Influx {
         await this.influx.query(query(), { database: this.conf.stockDatabase });
       } else {
         const ret = await this.getSeriesGap(MEASUREMENT_OHLC_FILLED);
+        console.log('Check refresh');
         if (ret.length > 0) {
+          console.log('refresh FILLED');
           const start = moment(ret[0])
             .subtract(100, 'm')
             .utc()
@@ -192,6 +194,7 @@ export class Influx {
           // Wait 30 seconds then refresh (allow watcher to fetch missing points)
           await sleep(30 * 1000);
           await this.influx.query(query(start), { database: this.conf.stockDatabase });
+          console.log('refresh FILLED DONE');
         }
       }
     } catch (error) {

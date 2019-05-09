@@ -63,6 +63,7 @@ export class MarketWatcher extends Watcher {
    */
   public async runWatcher(): Promise<void> {
     logger.info(`[WATCHER] Watcher started on ${this.conf.exchange}: ${this.symbol}`);
+    const tags = { base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange };
     this.shouldStop = false;
     // Async fill missing data or fetch history (for new series)
     await this.checkTimeserie().catch(error => {
@@ -81,6 +82,7 @@ export class MarketWatcher extends Watcher {
           .catch(error => {
             throw error;
           });
+        await this.getInflux().refreshOHLCFILLED(tags);
       } catch (error) {
         logger.error(error);
         throw new Error(`Error while running market watcher loop ${this.conf.exchange} (${this.symbol})`);
