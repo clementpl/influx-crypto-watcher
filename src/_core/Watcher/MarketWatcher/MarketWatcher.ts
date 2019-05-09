@@ -73,7 +73,7 @@ export class MarketWatcher extends Watcher {
       try {
         // Get last OHLC and write it to influx
         const data: OHLCV[] = await this.exchange.getCandles(this.symbol, {
-          limit: 1,
+          limit: 2,
         });
         // Write ohlc async
         this.getInflux()
