@@ -27,7 +27,7 @@ export class Influx {
     try {
       await this.createDatabaseIfNotExist(this.conf.stockDatabase);
       await this.createDatabaseIfNotExist(this.conf.eventDatabase);
-      await this.createContinuousQuery();
+      // await this.createContinuousQuery();
       logger.info(`[INFLUXDB] Connection successful: ${this.conf.host}:${this.conf.port}`);
     } catch (error) {
       logger.error(new Error(`[INFLUXDB] Connection error: ${this.conf.host}:${this.conf.port}`));
@@ -141,14 +141,14 @@ export class Influx {
     }
   }
 
-  public async createContinuousQuery() {
+  // public async createContinuousQuery() {
     /*
      To refill every serie use:
      SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume 
      INTO OHLC_FILLED FROM OHLC 
      GROUP BY time(1m), * fill(linear)
      */
-    try {
+    /* try {
       const query: string = `
       SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume
       INTO ${MEASUREMENT_OHLC_FILLED}
@@ -166,7 +166,7 @@ export class Influx {
       logger.error(error);
       throw new Error('[INFLUX] Problem while creating continuous query');
     }
-  }
+  }*/
 
   public async refreshOHLCFILLED(tags: { [name: string]: string }, force: boolean = false): Promise<void> {
     try {
