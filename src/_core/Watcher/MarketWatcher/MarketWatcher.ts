@@ -82,7 +82,11 @@ export class MarketWatcher extends Watcher {
           .catch(error => {
             throw error;
           });
-        await this.getInflux().refreshOHLCFILLED(tags);
+        const start = moment()
+          .subtract(100, 'm')
+          .utc()
+          .format();
+        await this.getInflux().refreshOHLCFILLED(tags, true, start);
       } catch (error) {
         logger.error(error);
         throw new Error(`Error while running market watcher loop ${this.conf.exchange} (${this.symbol})`);

@@ -77,7 +77,6 @@ export class Influx {
           database: this.conf.stockDatabase,
         }
       );
-      // TODO Check => console.log(ret);
       return ret;
     } catch (error) {
       logger.error(error);
@@ -142,13 +141,13 @@ export class Influx {
   }
 
   // public async createContinuousQuery() {
-    /*
+  /*
      To refill every serie use:
      SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume 
      INTO OHLC_FILLED FROM OHLC 
      GROUP BY time(1m), * fill(linear)
      */
-    /* try {
+  /* try {
       const query: string = `
       SELECT first(open) as open, max(high) as high, min(low) as low, last(close) as close, sum(volume) as volume
       INTO ${MEASUREMENT_OHLC_FILLED}
@@ -168,7 +167,11 @@ export class Influx {
     }
   }*/
 
-  public async refreshOHLCFILLED(tags: { [name: string]: string }, force: boolean = false): Promise<void> {
+  public async refreshOHLCFILLED(
+    tags: { [name: string]: string },
+    force: boolean = false,
+    date?: string
+  ): Promise<void> {
     try {
       // Query creator set time in where clause
       const query: (time?: string) => string = (time?: string) => `
@@ -176,12 +179,12 @@ export class Influx {
         INTO ${MEASUREMENT_OHLC_FILLED}
         FROM ${MEASUREMENT_OHLC}
         WHERE ${tagsToString(tags)}
-        ${time ? `AND time > '${time}'` : ''}
+        ${time ? `AND time >= '${time}'` : ''}
         GROUP BY time(1m), * fill(linear)
       `;
       // If for refresh the whole serie
       if (force) {
-        await this.influx.query(query(), { database: this.conf.stockDatabase });
+        await this.influx.query(query(date), { database: this.conf.stockDatabase });
       } else {
         const ret = await this.getSeriesGap(MEASUREMENT_OHLC_FILLED);
         if (ret.length > 0) {
