@@ -3,7 +3,8 @@ path=$(dirname "$0")
 docker exec influxdb rm -rf /testset
 docker cp $path/testset influxdb:/
 # Drop database
-curl -XPOST "http://127.0.0.1:8086/query" --data-urlencode "q=DROP DATABASE \"test_crypto_series\""
+# curl -XPOST "http://127.0.0.1:8086/query" --data-urlencode "q=DROP DATABASE \"test_crypto_series\""
+docker exec influxdb influx -execute "DROP DATABASE \"test_crypto_series\""
 # Restore database
 docker exec influxdb influxd restore -portable -db test_crypto_series /testset
 
