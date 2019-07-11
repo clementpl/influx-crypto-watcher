@@ -13,7 +13,7 @@ services:
     #  MONGO_INITDB_ROOT_USERNAME: root
     #  MONGO_INITDB_ROOT_PASSWORD: example
   influx:
-    image: influxdb:alpine
+    image: influxdb:1.5-alpine
     container_name: influxdb
     volumes:
      - ./data/influxdb:/var/lib/influxdb
