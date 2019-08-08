@@ -6,3 +6,4 @@ package-lock.json
 log/
 mysnapshot/
 backup/*
+config/*.json
