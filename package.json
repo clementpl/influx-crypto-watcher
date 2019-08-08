@@ -26,6 +26,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/nodemailer": "^6.2.1",
     "boom": "^7.2.2",
     "ccxt": "^1.17.513",
     "death": "^1.1.0",
@@ -35,6 +36,7 @@
     "joi": "^14.3.0",
     "moment": "^2.22.2",
     "mongoose": "^5.3.12",
+    "nodemailer": "^6.3.0",
     "uuid": "^3.3.2",
     "vision": "^5.4.3",
     "winston": "^3.1.0"

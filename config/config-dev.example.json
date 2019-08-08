@@ -17,5 +17,10 @@
   "api": {
     "host": "localhost",
     "port": 3000
+  },
+  "mail": {
+    "service": "gmail",
+    "user": "username@gmail.com",
+    "pass": "password"
   }
 }

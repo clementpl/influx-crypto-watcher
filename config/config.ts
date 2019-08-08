@@ -18,6 +18,11 @@ interface Config {
     host: string;
     port: number;
   };
+  mail?: {
+    service: string;
+    user: string;
+    pass: string;
+  };
 }
 
 /* tslint:disable */

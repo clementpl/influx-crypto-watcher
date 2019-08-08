@@ -245,7 +245,7 @@ export class MarketWatcher extends Watcher {
             this.symbol
           })`
         );
-        await this.getInflux().refreshOHLCFILLED(tags);
+        await this.getInflux().refreshOHLCFILLED(tags, true);
       }
     } catch (error) {
       logger.error(error);

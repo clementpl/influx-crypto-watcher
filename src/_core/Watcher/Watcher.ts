@@ -2,6 +2,7 @@ import * as uuid from 'uuid';
 import { WatcherModel } from './model';
 import { Influx } from '../Influx/Influx';
 import { logger } from '../../logger';
+import { sleep, sendMail } from '../helpers';
 
 export enum WatcherStatus {
   RUNNING = 'RUNNING',
@@ -75,19 +76,21 @@ export abstract class Watcher {
     this.status = WatcherStatus.RUNNING;
     await this.save().catch(error => logger.error(error));
     this.runWatcher()
-      // On error try to restart the watcher 3 times before stopping it
+      // On error try to restart the watcher 10 times before stopping it
       .catch(async error => {
         logger.error(error);
         try {
-          if (this.restart < 3) {
+          if (this.restart < 10) {
             this.restart += 1;
-            logger.info(`[Watcher] Try restarting (${this.restart}/3) watcher ${this.id}`);
+            await sleep(30 * 1000);
+            logger.info(`[Watcher] Try restarting (${this.restart}/10) watcher ${this.id}`);
             await this.stop();
             this.run().catch(err => {
               throw err;
             });
           } else {
             await this.stop();
+            sendMail(`Watcher ${this.id} stopped`);
             logger.error(`[Watcher] Stopping watcher ${this.id} (can't restart it)`);
           }
         } catch (error) {
