@@ -42,10 +42,14 @@ export class Influx {
    * @param {OHLCV[]} data
    * @memberof Influx
    */
-  public async writeOHLC(tags: { base: string; quote: string; exchange: string }, data: OHLCV[]) {
+  public async writeOHLC(
+    tags: { base: string; quote: string; exchange: string },
+    data: OHLCV[],
+    measurement = MEASUREMENT_OHLC
+  ) {
     const points = data.map(({ time, open, high, low, close, volume }) => {
       return {
-        measurement: MEASUREMENT_OHLC,
+        measurement,
         tags,
         fields: { open, high, low, close, volume },
         timestamp: moment(time)
