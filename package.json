@@ -35,7 +35,7 @@
     "influx": "5.0.7",
     "joi": "14.3.0",
     "moment": "2.22.2",
-    "mongoose": "5.3.12",
+    "mongoose": "5.7.5",
     "nodemailer": "6.3.0",
     "uuid": "3.3.2",
     "vision": "5.4.3",
