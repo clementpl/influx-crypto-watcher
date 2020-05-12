@@ -69,40 +69,24 @@ export class MarketWatcher extends Watcher {
     await this.checkTimeserie().catch(error => {
       logger.error(error);
     });
-    let discard: boolean = false; // flag to avoid writing new data (use to prevent corrupt data)
-    let lastDataInserted: OHLCV | null = null;
-
     // Watcher running loop
     while (!this.shouldStop) {
       try {
-        // Fetch last OHLCV
+        // Get last OHLC and write it to influx
         const data: OHLCV[] = await this.exchange.getCandles(this.symbol, {
           limit: 2,
         });
-        // Check price coherence (no more than 50% price change between 2 minutes)
-        const priceChange =
-          lastDataInserted === null
-            ? 0
-            : Math.abs(lastDataInserted.close - data.slice(-1)[0].close) / lastDataInserted.close;
-        if (priceChange > 0.5) {
-          discard = true;
-          logger.info(`[WATCHER] (DISCARD) Price change ${priceChange}, ${data.map(d => d.close).join('|')}`);
-        } else discard = false;
-
-        if (!discard) {
-          // Write OHLCV async
-          this.getInflux()
-            .writeOHLC({ base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange }, data)
-            .catch(error => {
-              throw error;
-            });
-          const start = moment()
-            .subtract(100, 'm')
-            .utc()
-            .format();
-          await this.getInflux().refreshOHLCFILLED(tags, true, start);
-          lastDataInserted = data.slice(-1)[0];
-        }
+        // Write ohlc async
+        this.getInflux()
+          .writeOHLC({ base: this.conf.base, quote: this.conf.quote, exchange: this.conf.exchange }, data)
+          .catch(error => {
+            throw error;
+          });
+        const start = moment()
+          .subtract(100, 'm')
+          .utc()
+          .format();
+        await this.getInflux().refreshOHLCFILLED(tags, true, start);
       } catch (error) {
         logger.error(error);
         throw new Error(`Error while running market watcher loop ${this.conf.exchange} (${this.symbol})`);
@@ -211,7 +195,7 @@ export class MarketWatcher extends Watcher {
         since: start.toDate().getTime(),
       });
       await this.getInflux().writeOHLC(tags, data);
-      // Refresh ohlcFilled after history retrieve (then OHLC_FILLED refresh will be handle with a continous query)
+      // Refresh ohlcFilled after history retrieve
       await this.getInflux().refreshOHLCFILLED(tags, true);
     } catch (error) {
       logger.error(error);
@@ -253,6 +237,8 @@ export class MarketWatcher extends Watcher {
           });
           if (data.length > 0) {
             await this.getInflux().writeOHLC(tags, data);
+            // Also Refresh OHLCFilled
+            await this.getInflux().writeOHLC(tags, data, MEASUREMENT_OHLC_FILLED);
           }
           i = j;
         }
@@ -261,7 +247,8 @@ export class MarketWatcher extends Watcher {
             this.symbol
           })`
         );
-        await this.getInflux().refreshOHLCFILLED(tags, true);
+        // Will refresh gap in OHLC FILLED if needed
+        await this.getInflux().refreshOHLCFILLED(tags);
       }
     } catch (error) {
       logger.error(error);
