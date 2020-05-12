@@ -37,15 +37,19 @@ curl --request POST --url http://localhost:3000/watchers --header 'content-type:
     }'
 ```
 
-Then go to grafana (http://localhost:3001/):
+When creating the grafana image everything should be configure for localhost usage (dashboards+datasource).
+Grafana povisioning help to import directly the different dashboards.
+
+If there is nothing already ready in grafana you can follow the manual configuration:
+Go to grafana (http://localhost:3001/):
 
 - Configure data source
 
-![datasource](/docker/grafana/data-source-conf-example.png)
+![datasource](/docker/grafana/images/data-source-conf-example.png)
 
-- import the dashboard given in "docker/grafana/dashboard/cypto-watcher.json"
+- import the dashboard given in "docker/grafana/dashboards/cypto-watcher.json"
 
-![dashboard](/docker/grafana/dashboard/screen.png)
+![dashboard](/docker/grafana/images/screen.png)
 
 ## Core
 

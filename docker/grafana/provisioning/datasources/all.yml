@@ -1,0 +1,17 @@
+datasources:
+- name: 'series'
+  type: 'influxdb'
+  access: 'direct'
+  url: 'http://localhost:8086'
+  database: 'dev_crypto_series'
+  is_default: true
+  version: 1
+  editable: true
+
+- name: 'trades'
+  type: 'influxdb'
+  access: 'direct'
+  url: 'http://localhost:8086'
+  database: 'dev_crypto_trader'
+  version: 1
+  editable: true

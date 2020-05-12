@@ -1,6 +1,4 @@
-# TODO kubernetes/swarm => docker stack deploy --compose-file docker-compose.yml
-# Deploy influxdb + mongodb
-# https://docs.docker.com/engine/reference/commandline/stack_deploy/#examples
+# Deploy grafana + influxdb + mongodb
 version: '3.3'
 services:
   mongo:
@@ -13,26 +11,19 @@ services:
     #  MONGO_INITDB_ROOT_USERNAME: root
     #  MONGO_INITDB_ROOT_PASSWORD: example
   influx:
-    image: influxdb:1.5-alpine
+    image: influxdb:1.8
     container_name: influxdb
     volumes:
-     - ./data/influxdb:/var/lib/influxdb
+      - /srv/docker/influxdb/data:/var/lib/influxdb
+      - ./influx/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      #- ./influx/init.sh:/docker-entrypoint-initdb.d/init.sh
     ports:
       - '8086:8086'
       - '8088:8088'
-    restart:
-      always
-      # Data persistency
-      # sudo mkdir -p /srv/docker/influxdb/data
-      # - /srv/docker/influxdb/data:/var/lib/influxdb
-    #configs:
-    #  - source: influx_config
+    restart: always
   grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
+    build: './grafana'
+    container_name: 'grafana'
     ports:
       - '3001:3000'
     restart: always
-configs:
-  influx_config:
-    file: ./influx/influxdb.conf
