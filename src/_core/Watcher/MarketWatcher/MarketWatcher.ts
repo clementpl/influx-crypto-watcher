@@ -253,6 +253,8 @@ export class MarketWatcher extends Watcher {
           });
           if (data.length > 0) {
             await this.getInflux().writeOHLC(tags, data);
+            // Also Refresh OHLCFilled
+            await this.getInflux().writeOHLC(tags, data, MEASUREMENT_OHLC_FILLED);
           }
           i = j;
         }
@@ -261,7 +263,7 @@ export class MarketWatcher extends Watcher {
             this.symbol
           })`
         );
-        await this.getInflux().refreshOHLCFILLED(tags, true);
+        await this.getInflux().refreshOHLCFILLED(tags);
       }
     } catch (error) {
       logger.error(error);
