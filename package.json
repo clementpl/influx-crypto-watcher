@@ -7,7 +7,7 @@
     "test": "NODE_ENV=TEST nyc mocha -r ts-node/register test/index.ts",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --write 'src/**/*.ts'",
-    "docker-start": "docker-compose -f ./docker/docker-compose.yml up",
+    "docker-start": "docker-compose -f ./docker/docker-compose.yml up -d",
     "docker-stop": "docker-compose -f ./docker/docker-compose.yml stop",
     "backup-influx": "BKP_PATH=/backup/`date +%Y-%m-%dT%H:%M` && docker exec influxdb influxd backup -portable -db dev_crypto_series $BKP_PATH && docker cp influxdb:${BKP_PATH} .${BKP_PATH}",
     "init-influx-test": "bash ./docker/influx/init-test.sh",
