@@ -14,7 +14,7 @@ Install dependencies
 
 `npm install`
 
-Run docker containers (influx, mongodb) (Need docker-compose)
+Run docker containers (influx, mongodb) (Need docker-compose >= 1.27.0 and docker engine >= 19.03.0)
 
 `npm run docker-start`
 

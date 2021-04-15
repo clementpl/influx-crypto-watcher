@@ -1,29 +1,25 @@
 # Deploy grafana + influxdb + mongodb
-version: '3.3'
+version: '3.8'
 services:
   mongo:
-    image: mongo:latest
+    image: mongo:4.4.4-bionic
     container_name: mongodb
     ports:
-      - '27017:27017'
+      - 27017:27017
     restart: always
-    #environment:
-    #  MONGO_INITDB_ROOT_USERNAME: root
-    #  MONGO_INITDB_ROOT_PASSWORD: example
   influx:
-    image: influxdb:1.8
+    image: influxdb:1.8.4-alpine
     container_name: influxdb
     volumes:
       - /srv/docker/influxdb/data:/var/lib/influxdb
       - ./influx/influxdb.conf:/etc/influxdb/influxdb.conf:ro
-      #- ./influx/init.sh:/docker-entrypoint-initdb.d/init.sh
     ports:
-      - '8086:8086'
-      - '8088:8088'
+      - 8086:8086
+      - 8088:8088
     restart: always
   grafana:
-    build: './grafana'
-    container_name: 'grafana'
+    build: ./grafana
+    container_name: grafana
     ports:
-      - '3001:3000'
+      - 3001:3000
     restart: always
